@@ -1,0 +1,292 @@
+title: Scientific Computation with Python
+code: PHY2039
+year: 2025-26
+base_dir: lti/content
+root_url: /{base}/{code}/{year}/
+author: Dr James Nightingale
+css: 
+  - custom.css
+structure:        
+    - type: part
+      title: 'Background material'
+      content: 
+        - type: chapter
+          title: Cheat sheet
+          source: content/revision/cheatsheet.md
+          topbar: false
+          build_pdf: False
+        - type: chapter
+          title: Python basics
+          source: content/revision/basics.md
+          topbar: false 
+        - type: chapter
+          title: Plotting
+          source: content/revision/plotting.md
+          topbar: false  
+        - type: chapter   
+          title: Control flow
+          source: content/revision/controlflow.md
+          topbar: false   
+        - type: chapter   
+          title: Functions
+          source: content/revision/functions.md  
+          topbar: false
+      #  - type: chapter
+      #    title: Assessment 1 plotting mark scheme
+      #    source: content/info/a1_markscheme/assessment1_mark_scheme.tex
+       #   topbar: false
+    - type: part
+      title: Introduction and useful links
+      content:
+        - type: slides
+          title: Module introduction
+          source: content/info/introductory_slides.md   
+          topbar: false
+          title_slide: false 
+        - type: chapter
+          title: Module contents
+          source: content/info/contents.md   
+          topbar: false
+    - type: part
+      title: Week 1
+      content:  
+        - type: slides
+          title: Week 1 Introduction
+          source: content/week1/lecture.md   
+          topbar: false   
+          title_slide: false            
+        - type: chapter
+          title: Week 1 Handout
+          source: content/week1/handout.md  
+          topbar: false
+    - type: part
+      title: Week 2
+      content:  
+        - type: slides
+          title: Week 2 Introduction
+          source: content/week2/lecture.md   
+          title_slide: false            
+          topbar: false   
+        - type: chapter
+          title: Week 2 Handout
+          source: content/week2/handout.md  
+          topbar: false 
+    - type: part
+      title: Week 3
+      content:  
+        - type: slides
+          title: Week 3 Introduction
+          source: content/week3/lecture.md   
+          title_slide: false            
+          topbar: false    
+          is_hidden: false
+        - type: chapter
+          title: Week 3 Handout
+          source: content/week3/handout.md  
+          topbar: false       
+          is_hidden: false                       
+    - type: part
+      title: Week 4
+      # Add more on e.g. quadratic convergence of N-R
+      content:  
+        - type: slides
+          title: Week 4 Introduction
+          source: content/week4/lecture.md   
+          topbar: false   
+          is_hidden: false
+          title_slide: false   
+        - type: chapter
+          title: Week 4 Handout
+          source: content/week4/handout.md  
+          topbar: false 
+          is_hidden: false
+    - type: part
+      title: Week 5
+      content:  
+        - type: slides
+          title: Week 5 Introduction
+          source: content/week5/lecture.md   
+          topbar: false   
+          is_hidden: false
+          title_slide: false 
+        - type: chapter
+          title: Week 5 Handout
+          source: content/week5/handout.md  
+          topbar: false  
+          is_hidden: false
+    - type: part
+      title: Week 6
+      # Add in plt.style next year
+      content:  
+        - type: slides
+          title: Week 6 Introduction
+          source: content/week6/lecture.md   
+          topbar: false   
+          title_slide: false  
+          is_hidden: false
+        - type: chapter
+          title: Week 6 Handout
+          source: content/week6/handout.md  
+          topbar: false          
+          is_hidden: false 
+    - type: part
+      title: Week 7
+      content:  
+        - type: slides
+          title: Week 7 Introduction
+          source: content/week7/lecture.md   
+          topbar: false   
+          title_slide: false 
+          is_hidden: false
+        - type: chapter
+          title: Week 7 Handout
+          source: content/week7/handout.md  
+          topbar: false      
+          is_hidden: false     
+    - type: part
+      title: Week 8
+      content:  
+        - type: slides
+          title: Week 8 Introduction
+          source: content/week8/lecture.md   
+          topbar: false   
+          title_slide: false
+          is_hidden: false
+        - type: chapter
+          title: Week 8 Handout
+          source: content/week8/handout.md  
+          topbar: false           
+          is_hidden: false
+    - type: part
+      title: Week 9
+      content:  
+        - type: slides
+          title: Week 9 Introduction
+          source: content/week9/lecture.md   
+          topbar: false   
+          title_slide: false   
+          is_hidden: false
+        - type: chapter
+          title: Week 9 Handout
+          source: content/week9/handout.md  
+          topbar: false           
+          is_hidden: false
+    - type: part
+      title: Week 10
+      content:  
+        - type: slides
+          title: Week 10 Introduction
+          source: content/week10/lecture.md   
+          topbar: false   
+          title_slide: false 
+          is_hidden: false
+        - type: chapter
+          title: Week 10 Handout
+          source: content/week10/handout.md  
+          topbar: false           
+          is_hidden: false
+    - type: part
+      title: Week 11
+      content:  
+        - type: slides
+          title: Week 11 Introduction
+          source: content/week11/lecture.md   
+          topbar: false   
+          title_slide: false  
+          is_hidden: false
+        - type: chapter
+          title: Learning Material Directory
+          source: content/week11/sitemap.md  
+          sidebar: false
+          topbar: false 
+          build_pdf: False
+          is_hidden: false
+        - type: chapter
+          title: Learning Material Directory (By Week)
+          source: content/week11/sitemap_byweek.md  
+          topbar: false      
+          is_hidden: false     
+        - type: chapter
+          title: Learning Material Directory (By Module)
+          source: content/week11/sitemap_bymodule.md   
+          topbar: false    
+          is_hidden: false
+    - type: part
+      # To add next year here or in PHY2039:
+      # - Facial recognition
+      # - quarternions?
+      # - image similarity
+      # - plotting on a map (crawfish infestation in UK - Northumberland Zoo - geopandas)
+      # - Python shiny
+      # - Superbowl google trends: "superbowl" and "Roman numerals" (Feb)
+      title: 'PHY2039 Off Piste'
+      content:
+        - type: chapter
+          title: Pie charts
+          source: content/offpiste/piecharts.md   
+          topbar: false  
+          build_pdf: False  
+        - type: chapter
+          title: Animations
+          source: content/offpiste/animations.md   
+          topbar: false 
+          build_pdf: False 
+        - type: chapter
+          title: Behind the Scenes of Numbas
+          source: content/offpiste/numbas.md   
+          topbar: false 
+          build_pdf: False  
+        # Week 5
+        - type: chapter
+          title: Secant fractals
+          source: content/offpiste/fractals.md   
+          topbar: false 
+          build_pdf: False  
+        # Week 6    
+        - type: chapter
+          title: Doughnuts
+          source: content/offpiste/donuts.md   
+          topbar: false 
+          build_pdf: False  
+        # Week 8
+        - type: chapter
+          title: Illusion animations
+          source: content/offpiste/illusion.md   
+          topbar: false 
+          build_pdf: False 
+        # Week 9                          
+        - type: chapter
+          title: Equations of Love
+          source: content/offpiste/love.md   
+          topbar: false 
+          build_pdf: False 
+        # Week 10      
+        - type: chapter
+          title: Christmas Trees
+          source: content/offpiste/christmas.md   
+          topbar: false  
+          build_pdf: False
+        - type: chapter
+          title: Bug Fixing
+          source: content/offpiste/bug_fixing.md
+          topbar: false
+          build_pdf: False
+        - type: part
+          title: 'Extension Topics'
+          content:
+          - type: chapter
+            title: Jupyter Notebooks
+            source: content/offpiste/extension_topics/jupyter.md   
+            topbar: false  
+            build_pdf: False   
+          - type: chapter
+            title: Partial Differential Equations
+            source: content/offpiste/extension_topics/pdes.md   
+            topbar: false  
+            build_pdf: False  
+          - type: chapter
+            title: Parallel Programming
+            source: content/offpiste/extension_topics/parallel.md   
+            topbar: false  
+            build_pdf: False        
+build_pdf: True

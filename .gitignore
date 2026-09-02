@@ -1,0 +1,20 @@
+build/
+tmp/
+
+**/*.aux
+**/*.log
+**/*.nav
+**/*.out
+**/*.snm
+**/*.swp
+**/*.toc
+
+# Local-only files inherited from the 2025–26 working tree. These were not in
+# that year's GitHub repository and are intentionally not published here.
+archive/2526/.gitignore
+archive/2526/.gitlab-ci.yml
+archive/2526/.gitmodules
+archive/2526/config_pre_bug.yml
+archive/2526/notes.md
+archive/2526/static/images/data/
+
