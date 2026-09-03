@@ -7,7 +7,7 @@
 ## Announcements
 
 * [Preparation advice for the January exam](https://ncl.instructure.com/courses/59162/pages/preparing-for-the-phy2039-exam) has been posted to the module Canvas page.
-* Includes mock exams; please email me with any particular questions from these papers you'd like to go through in Week 11.
+* Includes mock exams; please email me with any particular questions from these papers you'd like to go through in Week 10.
 
 ---
 
@@ -335,5 +335,4 @@ k_4 &= f\left(t_n+h,y_n+hk_3\right)
 ![The Herschel Cluster](/static/images/intro/cluster.jpg){width="60%"}
 
 The material sketched in this lecture is covered in greater detail in Handout 9.
-
 

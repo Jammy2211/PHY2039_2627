@@ -178,37 +178,23 @@ structure:
           title: Week 10 Introduction
           source: content/week10/lecture.md   
           topbar: false   
-          title_slide: false 
-          is_hidden: false
-        - type: chapter
-          title: Week 10 Handout
-          source: content/week10/handout.md  
-          topbar: false           
-          is_hidden: false
-    - type: part
-      title: Week 11
-      content:  
-        - type: slides
-          title: Week 11 Introduction
-          source: content/week11/lecture.md   
-          topbar: false   
           title_slide: false  
           is_hidden: false
         - type: chapter
           title: Learning Material Directory
-          source: content/week11/sitemap.md  
+          source: content/week10/sitemap.md
           sidebar: false
           topbar: false 
           build_pdf: False
           is_hidden: false
         - type: chapter
           title: Learning Material Directory (By Week)
-          source: content/week11/sitemap_byweek.md  
+          source: content/week10/sitemap_byweek.md
           topbar: false      
           is_hidden: false     
         - type: chapter
           title: Learning Material Directory (By Module)
-          source: content/week11/sitemap_bymodule.md   
+          source: content/week10/sitemap_bymodule.md
           topbar: false    
           is_hidden: false
     - type: part

@@ -482,28 +482,6 @@ sparse.diags([1, -2, 1], [-1, 0, 1], [3, 3]).toarray()</code></td>
        		<td colspan="2">Runge-Kutte Methods</td>
        	</tr>        	        	           
       </table>
-       <h3 style="margin-top:60px;">Week 10</h3>
-       <table class="table table-striped">
-       	<tr style="font-size: 1.2em;">
-       		<th>FUNCTION/TOPIC</th>
-       		<th>EXAMPLE</th>
-       	</tr> 
-       	<tr>
-       		<td colspan="2">ODE Method Module</td>
-       	</tr>       		 
-       	<tr>
-       		<td colspan="2">Stability in 2D</td>
-       	</tr>        	        	
-       	<tr>
-       		<th colspan="2">Dynamical Systems</th>
-       	</tr>       
-       	<tr>
-       		<td colspan="2">Lotka-Voltera system</td>
-       	</tr>
-       	<tr>
-       		<td colspan="2">Logistic Map</td>
-       	</tr>
-       </table>        
     </div>
     <div id="profile1" class="tab-pane fade">
     	<h2>Content by Python module</h2>

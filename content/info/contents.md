@@ -194,17 +194,6 @@ Algorithms for solving ODEs:
 * Euler method with a system of ODEs
 * Runge-Kutte Methods
 
-## Week 10 - Looking forward
-
-* ODE module
-* Stability in 2 dimensions
-* Dynamical system examples
-
-Good practice and advice
-
-Jupyter notebooks and other ways of using Python
-
-
-## Week 11 - Revision
+## Week 10 - Revision
 
 * Mock exams

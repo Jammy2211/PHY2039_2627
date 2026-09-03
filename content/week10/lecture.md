@@ -1,208 +1,77 @@
 ![PHY2039](/static/images/phy2039-logo.png){style="width: 600px;"}
 
-<h1 style="text-align: center;">Lecture 10 - In-depth examples and generalizations</h1>
+<h1 style="text-align: center;">Lecture 10 - Revision </h1>
 
 ---
 
-## Announcements
+## Exam information
 
-* Week 11 is a revision week; please email me with any topics or questions you'd like to go through.
+* In-person invigilated exam in a campus computer cluster.
+* Can consult hand-written or printed notes, [the lecture materials via chirun](https://lti.chirun.org.uk/media/chirun-packages/output/daf84705-b35e-4219-95a0-733823b1b1f6/), load and refer to previous code saved in your University OneDrive.
+* Can access [Python Documentation](https://docs.python.org/3/library/index.html), [NumPy Documentation](https://numpy.org/doc/), [Matplotlib Documentation](https://matplotlib.org/stable/index.html) and [SciPy Documentation](https://docs.scipy.org/doc/scipy/) online.
 
-* Release of Assessment 2 marks may be delayed.
-
----
-
-### Recap: Stability of Euler method
-
-We considered the *stability* of the numerical solution obtained via the Euler method applied to
-
-$$\frac{dy}{dt} = -\lambda y$$
-
-for $\lambda$ a constant.
-
-The Euler method iterative step is (with step size $h$)
-
-$$ y_{n+1} = y_n - \lambda hy_n = (1-\lambda h) \; y_n $$
+Full information available [on this page](https://ncl.instructure.com/courses/68091/pages/preparing-for-the-phy2039-exam?module_item_id=3873559).
 
 ---
 
-Repeated application of the iterative step yields
+## Advice: before the exam
 
-\begin{align}
-y_{n+1} &= (1-\lambda h) \; y_n  \\
-&= (1-\lambda h)^2 \; y_{n-1} \\
-&= (1-\lambda h)^{n+1} \; y_0
-\end{align}
+Make sure you know the following **before** the exam:
 
-It follows that $y_n \to 0$ as $t\to\infty$ if and only if $|1-\lambda h|\lt 1$.
-
-Rearrange to obtain 
-
-$$h \lt \frac{2}{\lambda}$$
+* The location of the cluster you have been scheduled in. The exam will be split over a number of clusters, and you are unlikely to be scheduled in the Herschel cluster.
+* How to log in to the cluster PCs and access Spyder. In particular, make sure you know your IT account password.
+* Have transferred any files you may wish to consult during the exam to your University OneDrive.
 
 ---
 
-Recall that exact solution to 
+Think carefully about how and where you will practise for the exams:
 
-$$\frac{dy}{dt} = -\lambda y$$
-
-is $y = A e^{-\lambda t}$, for $A$ a constant that depends on the initial condition.
-
-It is clear that the exact solution tends to $0$ as $t$ tends to infinity. Therefore the Euler method is *stable* if and only if $h \lt \frac{2}{\lambda}$.
+* Can you run Python and Spyder on your own computer? If not make sure you budget time to practise in the campus computer clusters.
+* Recommend you do this anyway to get used to the environment you will be using in the exam.
+* You can always run Python via the chirun notes (I will show example in a moment).
 
 ---
 
-### Stability in 2D
+## Advice: during the exam
 
-Consider the second-order ODE
+The exam is made up of 4 questions, each worth ~25 marks and of roughly equal length.
 
-$$\frac{d^2 y}{dt^2}+16\frac{dy}{dt}-10y = 0 $$
+* The mock exams 1 and 2 are 5 questions (each worth ~ 20) marks, Mock Exam 3 is 4 questions (each worth ~25 marks).
 
-Set $u = \frac{dy}{dt}$ to obtain system of first-order ODEs
+You have two hours (plus any additional time as per an SSP) to complete the exam.
 
-$$ \frac{dy}{dt} = u, \qquad \frac{du}{dt} = 10y - 16u $$
-
-We can express this system as a matrix equation
-
-$$ \frac{d}{dt} \begin{pmatrix} y \\ u \end{pmatrix} =  \begin{pmatrix} 0 & 1 \\ 10 & -16 \end{pmatrix} \begin{pmatrix} y \\ u \end{pmatrix} $$ 
-
+This suggests approximately 30 minutes per question, including checking your work.
 
 ---
 
-We saw that the Euler method is stable for
+## Advice: during the exam
 
-$$\frac{\mathrm{d}y}{\mathrm{d}t} = -\lambda y$$
+Other suggestions:
 
-precisely when $h \lt \frac{2}{\lambda}$.
+* Have a pen and paper with you.
 
-Notice that the matrix equation above can be written
+* Remember that you can complete the questions in any order, and move between questions e.g. complete Q1)a), then Q2)b)... Just make sure you have submitted all answers before changing questions
 
-$$\mathbf{y'} = -\Lambda \mathbf{y}$$
-
-where $\mathbf{y'}$ and $\mathbf{y}$ are appropriate vectors.
+* Don't consider the exam complete until you have checked your work.
 
 ---
 
-We shall see in this week's Handout that the stability of the Euler method for this system is governed by the eigenvalues of $\Lambda$.
+## Questions Testing Python Knowledge
 
-In particular, the method is stable if and only if 
+* Hard to have a prepared answer to look up.
 
-$$h \lt \frac{2}{\lambda_{max}}$$
+* Relying on lecture notes will likely lead to a lot of time spent searching, make exam rushed.
 
-where $\lambda_{max}$ is the largest eigenvalue of $\Lambda$.
+* Basically the Python / Numpy foundations: defining variables, slicing arrays, loops, conditionals, defining functions, basic plotting.
 
----
-
-```python
-import numpy as np
-import scipy.linalg as sla
-
-# Lambda matrix
-L = np.array([[0,-1],[-10,16]])
-
-# Get eigenvalues and eigenvectors
-eigenvalues,eigenvectors = sla.eig(L)
-
-print("Max eigenvalue: {}".format(max(eigenvalues)))
-print("Critical h: {}".format(2/max(eigenvalues).real))
-
-```
-
-Critical $h \approx 0.12$
+* Mock Exam 1, Question 1, c on the "neighbouring" function is a good example of a question you should be able to answer through Python knowledge alone.
 
 ---
 
-We can verify this using the following code:
+## Questions With Look Up Answer
 
-```python
-import numpy as np
-import matplotlib.pyplot as plt
+* Lots of methods you can often look up the answer via the lecture notes, or even better via a prepared code snippet.
 
-h = 0.1 
-t = np.arange(0,10+h,h)
-y = np.zeros(len(t))
-u = np.zeros(len(t))
+* Examples include, root finding, curve fitting, numerical integration, solving ODEs.
 
-y[0] = 5
-u[0] = 5
-   
-# Solve with Euler Method
-for n in range(len(t)-1):
-    y[n+1] = y[n] + (t[n+1]-t[n]) * (u[n])
-    u[n+1] = u[n] + (t[n+1]-t[n]) * (10*y[n]-16*u[n])
-```
-
----
-
-## Two in-depth examples
-
-This week's Handout contains two in-depth examples of these methods applied to *dynamical systems*.
-
----
-
-In mathematics the term *dynamical system* typically refers to a collection of quantities that evolve in time. These quantities may have a physical meaning, but often we simply study them in the abstract.
-
-We use differential equations to predict how these quantities will change over time.
-
----
-
-## The Lotka-Volterra equations
-
-A very common system of ODEs that is used to describe population dynamics of biological systems
-
-$$
-\begin{align}
-\frac{dx}{dt} &=\alpha x-\beta xy \\
-\frac{dy}{dt} &=\delta xy-\gamma y
-\end{align}
-$$
-
-where $x$ denotes the population of a prey species, and $y$ that of a predator species, and $\alpha$, $\beta$, $\delta$, $\gamma$ are constants.
-
----
-
-![The Predator Prey Model](/static/images/week9/predator-prey.png)
-
----
-
-![Hare Lynx findings](/static/images/week9/harelynx.png)
-
----
-
-![Predator Prey Phase Portrait](/static/images/week9/predatorpreyphase.png)
-
----
-
-## The logistic Map
-
-Recall the logistic equation from Week 9, also used in population modelling
-
-$$ \frac{\mathrm{d}x}{\mathrm{d}t} = rx(1-x) $$
-
-The equation above is the continuous counterpart to the discrete *logistic map*
-
-$$ x_{n+1} = rx_n(1-x_n) $$
-
-This very simple equation possesses remarkable properties.
-
----
-
-Plotting $x_i$ at various values of $r$ yields
-
-![Animation of the logistic map](/static/images/week9/logistic_animation.gif)
-
-
----
-
-In this week's Handout we'll recreate the *period doubling bifurcation plot*:
-
-![the logistic map](/static/images/week9/logisticmap.png)
-
----
-
-![The Herschel Cluster](/static/images/intro/cluster.jpg){width="60%"}
-
-The material sketched in this lecture is covered in greater detail in Handout 10.
-
-
-
+*Mock Exam 1, Question 3, a on the Trapezium Rule is a good example.
