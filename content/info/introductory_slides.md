@@ -88,70 +88,64 @@ One lecture and one practical sesssion each week.
         </tr>
         <tr >
             <td>1</td>
-            <td>22nd Sept</td>
+            <td>28th Sept</td>
             <td>Foundations + Curve Fitting I</td>
             <td></td>
         </tr>
         <tr >
             <td>2</td>
-            <td>29th Sept</td>
+            <td>5th Oct</td>
             <td>Curve Fitting II</td>
-            <td>Assessment 1 opens Friday 16:00</td>
+            <td>Assessment 1 opens Friday 9th October at 16:00</td>
         </tr>
         <tr >
             <td>3</td>
-            <td>6th Oct</td>
+            <td>12th Oct</td>
             <td>Matrices and Linear Algebra</td>
             <td></td>
         </tr>
         <tr >
             <td>4</td>
-            <td>13th Oct</td>
+            <td>19th Oct</td>
             <td>Algorithms + Root Finding I</td>
-            <td>Assessment 1 due Friday 16:00</td>
+            <td>Assessment 1 due Friday 23rd October at 16:00</td>
         </tr>
         <tr >
             <td>5</td>
-            <td>20th Oct</td>
+            <td>26th Oct</td>
             <td>Root Finding II</td>
             <td></td>
         </tr>
         <tr >
             <td>6</td>
-            <td>27th Oct</td>
+            <td>2nd Nov</td>
             <td>Advanced Plotting</td>
-            <td>Assessment 2 opens Friday 16:00</td>
+            <td>Assessment 2 opens Friday 6th November at 16:00</td>
         </tr>
         <tr >
             <td style="background-color: #ced4d9; text-align: center;" colspan="4"><em><strong>Enrichment week</strong></em></td>
         </tr>
         <tr >
             <td>7</td>
-            <td>10th Nov</td>
+            <td>16th Nov</td>
             <td>Numerical differentiation and integration</td>
             <td></td>
         </tr>
         <tr >
             <td>8</td>
-            <td>17th Nov</td>
+            <td>23rd Nov</td>
             <td>Differential equations I</td>
-            <td>Assessment 2 due Friday 16:00</td>
+            <td>Assessment 2 due Friday 27th November at 16:00</td>
         </tr>
         <tr >
             <td>9</td>
-            <td>24th Nov</td>
+            <td>30th Nov</td>
             <td>Differential equations II</td>
             <td></td>
         </tr>
         <tr >
             <td>10</td>
-            <td>1st Dec</td>
-            <td>Looking forward</td>
-            <td></td>
-        </tr>
-        <tr >
-            <td>11</td>
-            <td>8th Dec</td>
+            <td>7th Dec</td>
             <td>Revision</td>
             <td></td>
         </tr>
@@ -391,7 +385,5 @@ As with the world of research, many careers pursued by mathematics and physics g
 E.g. an increasing number of undergraduates go on to MSc courses and internships in data science or analytics.
 
 Newcastle graduates are in an excellent position to succeed in these roles.
-
-
 
 

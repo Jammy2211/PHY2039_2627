@@ -14,7 +14,7 @@
 
 ## Assessment 2
 
-* Due on ***Friday 21th November** at 16:00.
+* Due on ***Friday 27th November** at 16:00.
 * See Preparing for Assessment 2 page in module Canvas.
 * Email me to ask questions or book office hours.
 
@@ -296,6 +296,5 @@ $$ \int_a^b f(x)\mathrm{d}x \approx \frac{b-a}{6}\left[f(a)+4f\left({\frac {a+b}
 ![The Herschel Cluster](/static/images/intro/cluster.jpg){width="60%"}
 
 The material sketched in this lecture is covered in greater detail in Handout 7.
-
 
 

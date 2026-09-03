@@ -9,7 +9,7 @@
 
 Assessment 1 is open. See the page on the Canvas course *Preparing for Assessment 1*, and Exercise 2.7 from the Week 2 Handout.
 
-Deadline: 16:00 on the 17th of October.
+Deadline: 16:00 on the 23rd of October.
 
 Questions: during practical, via email.
 
@@ -298,4 +298,3 @@ xdash = R @ x
 ![The Herschel Cluster](/static/images/intro/cluster.jpg){width="60%"}
 
 The material sketched in this lecture is covered in greater detail in Handout 3.
-

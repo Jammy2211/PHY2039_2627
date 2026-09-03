@@ -7,7 +7,7 @@
 ## 
 
 * Assessment 1
-    * released Friday 3rd October, due Friday 17th October (both at 16:00)
+    * released Friday 9th October, due Friday 23rd October (both at 16:00)
     * worth **5%** of the module grade
     * based on Weeks 1 and 2
     * Numbas test with supplementary plot upload

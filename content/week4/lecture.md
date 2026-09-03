@@ -6,9 +6,9 @@
 
 ## Reminder
 
-* Assessment 1 deadline is this Friday 17th at 16:00.
+* Assessment 1 deadline is this Friday 23rd at 16:00.
 
-* Two week gap, then Assessment 2 released on Friday 31st October at 16:00.
+* Two week gap, then Assessment 2 released on Friday 6th November at 16:00.
 
 ---
 
@@ -446,4 +446,3 @@ In general Newton-Raphson is faster than bisection, but requires calculating the
 ![The Herschel Cluster](/static/images/intro/cluster.jpg){width="60%"}
 
 The material sketched in this lecture is covered in greater detail in Handout 4.
-
