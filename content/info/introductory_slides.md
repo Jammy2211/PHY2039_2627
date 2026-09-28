@@ -14,7 +14,7 @@ Email me via [James.Nightingale@newcastle.ac.uk](mailto:James.Nightingale@newcas
 
 My office is Herschel Annex 2.12 (NOT the main building, the annex opposite it, door has "Dr Colin Woods" written on it currently)
 
-Office hours are After Monday's Lecture / Workshop, 11am - 1pm, however please don't hesitate to contact me to arrange a meeting via email, either in-person or via Zoom. 
+Office hours are 11am - 1pm, before Monday's Lecture / Workshop. Please don't hesitate to contact me via email or a Teams message.
 
 ---
 
@@ -68,7 +68,7 @@ The first few weeks are a recap, and by the second or third week it won't make m
 One lecture and one practical sesssion each week.
 
 <table class="table"  style="font-size: 0.8em;">
-	<tr><th>Monday</th><td>Lecture </td><td>10:00-11:00</td><td>See Timetable due to Variation</td></tr>
+	<tr><th>Monday</th><td>Lecture </td><td>1pm (Wks 6-8, 10, 12-13)<br>2pm (Wks 4-5, 11, 14)</td><td>See Timetable due to Variation</td></tr>
     <tr><th>Friday</th><td>Practical</td><td>11:00-13:00</td><td>KGVI.IT Service Cluster (LAWN.PC 2.33), (KGVI University Map ref:19)</td></tr>
 </table>
 
@@ -247,6 +247,10 @@ A good way to get some examples of this is by asking lecturers in your other mod
 
 ---
 
+[Go to Youtube video]
+
+---
+
 <div class="title-slide" style="background-image: none;">
     <h3>Programming in your course </h3>
 </div>
@@ -278,6 +282,10 @@ Assessment 1 & 2: You may use AI tools (e.g. ChatGPT).
 Exam: AI tools will be blocked and not available.
 
 Advice: At the end of each workshop, spend ~30 minutes doing the exercises without AI to prepare for the exam.
+
+---
+
+[Go to my website]
 
 ---
 
