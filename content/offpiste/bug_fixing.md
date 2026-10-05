@@ -1,88 +1,88 @@
-##  Bug Lecture Demo
+# Bug fixing
 
-This script is meant to extract the first column of a 2D numpy array A
-and double its values.
+The lecture demonstration and the three exercises below contain deliberate bugs.
+Each runnable block is a separate program: an assertion failure or an
+`IndexError` on the first run is expected.
 
-However, it contains a bug and does not given the expected result.
+Read the intended result before changing the code. Use `print()` statements to
+inspect array values, shapes and loop indices immediately before the line that
+fails. After each change, rerun the whole block from its initial state so that
+previous changes to arrays do not affect your diagnosis.
 
-In the lecture I will show how to use print() statements to debug and fix this code.
+Fix the code that produces the result. Do not remove the assertions or change
+the expected values to make the checks pass. An assertion checks that a condition
+is true; if it is false, Python stops with an `AssertionError` and the supplied
+message.
 
-**Intended behaviour**.
+## Bug lecture demo: rows and columns
 
-A is:
+This program should double the first column of a two-dimensional NumPy array
+`A` in place, leaving the other columns unchanged. In the lecture, we will use
+`print()` statements to diagnose why it changes the wrong entries.
 
-    [[1 1 1]
-    [2 2 2]
-    [3 3 3]]
+Initially, `A` is:
 
-The first column is: 
+```text
+[[1 1 1]
+ [2 2 2]
+ [3 3 3]]
+```
 
-    [[1].
-     [2], 
-     [3]].
+The first column, selected by `A[:, 0]`, is the one-dimensional array
+`[1, 2, 3]` with shape `(3,)`. Selecting a column this way does not produce a
+two-dimensional array of shape `(3, 1)`.
 
-Doubling it inside A gives the array:
+After doubling that column, `A` should be:
 
-    [[2 1 1]
-    [4 2 2]
-    [6 3 3]]
+```text
+[[2 1 1]
+ [4 2 2]
+ [6 3 3]]
+```
 
+Which entries does `A[0, :]` select? Print the selection and the updated array
+to check your prediction.
 
 ```runnable lang="python"
 import numpy as np
 
-A = np.array([[1,1,1],
-              [2,2,2],
-              [3,3,3]])
+A = np.array([[1, 1, 1],
+              [2, 2, 2],
+              [3, 3, 3]])
 
 A[0, :] = 2 * A[0, :]
 
-expected = np.array([[2,1,1],
-                     [4,2,2],
-                     [6,3,3]])
+expected = np.array([[2, 1, 1],
+                     [4, 2, 2],
+                     [6, 3, 3]])
 
-assert np.array_equal(A, expected), "Column extraction is incorrect!"
+assert np.array_equal(A, expected), "Double only the first column of A."
+print("Success! Only the first column was doubled.")
 ```
 
+## Bug 1: array shapes and matrix multiplication
 
-##  Bug 1
+This program first adds two one-dimensional arrays `A` and `B`, each with shape
+`(3,)` and values `[1, 1, 1]`. Their sum, `C_sum`, should remain a
+one-dimensional array `[2, 2, 2]` with shape `(3,)`.
 
-This script creates two 1D numpy arrays, and computes:
+After calculating and checking the sum, the program should treat `A` as a
+column with shape `(3, 1)` and `B` as a row with shape `(1, 3)`. Multiplying
+these two-dimensional arrays should produce a matrix `C` with shape `(3, 3)`:
 
-    1) Their sum.
-    2) It then tries to perform a matrix multiplicaiton, assuming one is 3 x 1 and the other is 1 x 3, but it fails.
+```text
+[[1 1 1]
+ [1 1 1]
+ [1 1 1]]
+```
 
-The goal is to get a 3 x 3 matrix as the result of the matrix multiplication.
+The current call to `np.matmul(A, B)` succeeds, but with two one-dimensional
+inputs it computes their dot product: the scalar `3.0`, whose shape is `()`.
+The assertion then fails because this is not the intended matrix.
 
-**Intended behaviour**
-
-A and B are both 1D arrays of shape (3,) with all elements equal to 1:
-
-    A = [1, 1, 1]
-    B = [1, 1, 1]
-
-The sum C_sum = A + B is:
-
-    C_sum = [2, 2, 2]
-
-If A is a 3 x 1 matrix, and B is a 1 x 3 matrix, their matrix multiplication should be a 3x3 matrix with all elements equal to 1:
-
-    C = [[1, 1, 1],
-        [1, 1, 1],
-        [1, 1, 1]]
-
-However, the code below does not produce the expected 3 x 3 matrix.
-
-What do you need to do with the shapes of C to make it output a 3 x 3 matrix?
-
-**Task:**
-
-Use print statements, in particular printing the shape of the numpy arrays, to identify and fix the bug(s) in the code.
-
-Here is how you print the shape of a numpy array:
-
-    print(A.shape)
-    print(B.shape)
+**Task:** Use print statements to inspect `A.shape`, `B.shape`, `C` and
+`C.shape`. Change the shapes of the operands **after** the sum check and
+**before** the multiplication. Do not try to reshape the scalar result `C`.
 
 ```runnable lang="python"
 import numpy as np
@@ -91,152 +91,137 @@ A = np.ones(3)
 B = np.ones(3)
 
 C_sum = A + B
+expected_sum = np.array([2, 2, 2])
 
-expected_sum = np.array([2,2,2])
-
-assert np.array_equal(C_sum, expected_sum), "Sum is Incorrect!"
+assert np.array_equal(C_sum, expected_sum), "The sum must be [2, 2, 2] with shape (3,)."
 
 C = np.matmul(A, B)
 
-expected = np.array([[1,1,1],
-                     [1,1,1],
-                     [1,1,1]]
-                    )
+expected = np.array([[1, 1, 1],
+                     [1, 1, 1],
+                     [1, 1, 1]])
 
-assert np.array_equal(C, expected), "Matrix Multiplication Incorrect!"
+assert np.array_equal(C, expected), "The matrix product must be a 3 x 3 array of ones."
+print("Success! The sum and matrix product are correct.")
 ```
 
-##  Bug 2
+## Bug 2: loop bounds and array axes
 
-This script demonstrates basic NumPy array operations and the use of for loops
-to manipulate specific rows of a matrix.
+This program should square the **first two entries** of the first row of `A`
+and put them in the first row of a result array, `sum_matrix`, with shape
+`(3, 2)`. The other two rows of the result should remain zero:
 
-It is intended to:
+```text
+[[1 4]
+ [0 0]
+ [0 0]]
+```
 
-    1. Create two matrices, A (3×3) and B (3×2), and prepare an empty 3×2 result matrix.
-    2. Add the square of the first row of A to the first row of the result matrix.
-    3. Double the values in the second row of the result matrix using a for loop.
+On its first run, the program stops with:
 
-**Bug**
+```text
+IndexError: index 2 is out of bounds for axis 1 with size 2
+```
 
-The code below when run gives the error:
+For a two-dimensional array, axis 0 is the first axis (rows) and axis 1 is the
+second axis (columns). In `sum_matrix[0, i]`, `0` selects the first row and
+`i` selects a column. There are two columns, so the valid column indices are
+`0` and `1`. Index `2` would select a third column, which does not exist.
 
-    File "bug_fix_1.py", line 29, in <module>
-    sum_matrix[0, i] += A[0, i]**2
-    ~~~~~~~~~~^^^^^^
+This short example produces the same error independently:
 
-    IndexError: index 2 is out of bounds for axis 1 with size 2
+```python
+import numpy as np
 
-**Task**
+sum_matrix = np.zeros((3, 2))
+print(sum_matrix[0, 2])  # No third column: this raises IndexError.
+```
 
-Use print statements to diagnose the bug and fix the code.
-
-In particular, print the shape of a numpy array to absolutely confirm why the bug occurs. An example of
-printing the shape of numpy arrays was used in the previous example.
-
-Reading the error message above is particularly helpful, as it directly points to where the code breaks.
-
-**Description of the bug**
-
-Lets break down what an IndexError is telling us here:
-
-    Traceback (most recent call last):
-        File "/mnt/c/Users/Jammy/Code/PHY2039/bug_fix_1.py", line 50, in <module>
-            sum_matrix[0, i] += A[0, i]**2
-            ~~~~~~~~~~^^^^^^
-    IndexError: index 2 is out of bounds for axis 1 with size 2
-
-This is telling us that for the numpy array `sum_matrix`, we are: 
-
-    - Trying to access to its first axis (axis 1, where the input is the `i` in [0, i]) 
-    - Trying to access index 2 of axis 1 (e.g the value of `i` is 2).
-    - But axis 1 only has size 2 (meaning the only valid indices are 0 and 1).
-
-An equivalent way to produce this bug would be simply to run:
-
-    import numpy as np
-    sum_matrix = np.zeros((3,2)) # Second axis has size 2
-    print(A[0,2])  # This will give the same IndexError, because 2 is out of bounds for axis 1 with size 2
+**Task:** Print `A.shape`, `sum_matrix.shape` and the value of `i` immediately
+before the assignment inside the loop. Why is `i = 2` valid for `A` but invalid
+for `sum_matrix`? Fix the loop so its bound comes from the **number of columns
+in the result array**, rather than a hard-coded number. Keep the result shape
+`(3, 2)` and leave its other rows zero.
 
 ```runnable lang="python"
 import numpy as np
 
-# Step 1: Create a 3x3 array
 A = np.array([[1, 2, 3],
               [4, 5, 6],
               [7, 8, 9]])
 
-print("Shape of A:", A.shape)  # Debug print to check the shape of A
+sum_matrix = np.zeros((3, 2))
 
-# Step 2: Define another array
-B = np.array([[9, 8],
-              [6, 5],
-              [3, 2]])
-
-# Step 3: Initialize a summed matrix with zeros
-sum_matrix = np.zeros((3,2))
-
-# Step 4: Add the square of the first row of A to the summed matrix
+# Fill the first row using the corresponding squared entries of A.
 for i in range(3):
     sum_matrix[0, i] += A[0, i]**2
 
-# Step 4: Add the second row of the summed matrix to itself
-for i in range(3):
-    sum_matrix[1, i] += sum_matrix[1, i]
+expected = np.array([[1, 4],
+                     [0, 0],
+                     [0, 0]])
 
-# Step 5: Validate the result
-assert (sum_matrix == np.array([[1, 4],
-                               [0, 0],
-                               [0, 0]])).all()
+assert np.array_equal(sum_matrix, expected), "The first row must be [1, 4]; the other rows must stay zero."
+print("Success! The result has the intended values and shape.")
 ```
 
-##  Bug 3
+## Bug 3: time samples and Euler steps
 
-This script attempts to solve the ODE
+This program approximates the solution of the ordinary differential equation
 
-    dy/dt = -2y + sin(t),      y(0) = 0
+```text
+dy/dt = -2y + sin(t),      y(0) = 0
+```
 
-using the forward Euler method.
+using the forward Euler method:
 
-**Intended behaviour**
+```text
+y[n + 1] = y[n] + h * f(y[n], t[n])
+```
 
-The code should:
+The time array `np.linspace(0, 1, 10)` contains **10 sample times**, including
+both endpoints `0` and `1`. There are **9 intervals** between them, so the step
+size is `h = 1/9`, approximately `0.111111`, not `0.1`.
 
-    1. Create a time array t of length 10 (0 to 1 in steps of 0.1).
-    2. Use Euler's formula: y[n+1] = y[n] + h * f(y[n], t[n])
-    3. Return all values of y.
+The array `y` stores one value per time sample. Its first entry holds the
+initial value `y[0] = 0`; nine Euler updates should fill its remaining entries.
+The final entry should be approximately `0.25141332912489534`. This is the
+forward Euler approximation on this particular time grid, not the exact
+solution of the differential equation at `t = 1`.
 
-**Bug**
+The current loop attempts one update too many and stops with:
 
-The loop runs correctly for the first few iterations, but then crashes with:
+```text
+IndexError: index 10 is out of bounds for axis 0 with size 10
+```
 
-    IndexError: index 10 is out of bounds for axis 0 with size 10
+**Task:** Print `len(t)`, `len(y)` and `h`, then print `n` and `n + 1`
+immediately before the update inside the loop. What is the largest valid
+index in `y`? What is the largest value of `n` for which both `y[n]` and
+`y[n + 1]` exist? Use these answers to fix the loop bound. Keep the time grid,
+initial condition and Euler update unchanged.
 
-Your job is to use print() statements to diagnose why the code crashes, and then fix the bug so that the code runs
-successfully to completion.
-
-Think carefully about what this IndexError means given what we learned in the previous bug.
+The final check uses a small absolute tolerance because the result is a
+floating-point calculation.
 
 ```runnable lang="python"
 import numpy as np
 
-# Step 1: ODE function
-def f(y, t):
-    return -2*y + np.sin(t)
 
-# Step 2: Time array and initialization
+def f(y, t):
+    return -2 * y + np.sin(t)
+
+
 t = np.linspace(0, 1, 10)
 h = t[1] - t[0]
-
 y = np.zeros(10)
 
-# Step 3: Euler loop
 for n in range(len(t)):
-    y[n+1] = y[n] + h * f(y[n], t[n])
+    y[n + 1] = y[n] + h * f(y[n], t[n])
 
-print("Success! All iterations completed.")
+assert y.shape == t.shape, "Store one y value for each time sample."
+assert y[0] == 0, "Keep the initial condition y(0) = 0."
+assert np.isclose(y[-1], 0.25141332912489534, rtol=0, atol=1e-8), "The final value does not match the Euler approximation on this grid."
 
-assert np.round(y[-1], 8) == 0.25141333
-
-print("Success! Final assertion passed.")
+print("Success! All Euler checks passed.")
+print("Euler approximation at t = 1:", y[-1])
 ```
