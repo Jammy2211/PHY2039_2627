@@ -253,7 +253,12 @@ structure:
           topbar: false  
           build_pdf: False
         - type: chapter
-          title: Bug Fixing
+          title: Bug Fixing (Beginner)
+          source: content/offpiste/bug_fixing_beginner.md
+          topbar: false
+          build_pdf: False
+        - type: chapter
+          title: Bug Fixing (Advanced)
           source: content/offpiste/bug_fixing.md
           topbar: false
           build_pdf: False

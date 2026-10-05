@@ -1,4 +1,10 @@
-# Bug fixing
+# Bug Fixing (Advanced)
+
+This workshop is for later in the course, after you have used NumPy arrays,
+indexing, array shapes, matrix multiplication and `for` loops. The final
+exercise also assumes familiarity with the forward Euler method for solving
+ordinary differential equations. For an introduction using simple variables
+and arithmetic, start with **Bug Fixing (Beginner)** in the course contents.
 
 The lecture demonstration and the three exercises below contain deliberate bugs.
 Each runnable block is a separate program: an assertion failure or an
