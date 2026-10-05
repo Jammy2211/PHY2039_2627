@@ -3,9 +3,9 @@
 A bug is a mistake in a program. Finding and fixing bugs is a normal part of
 writing Python: you do not need to understand everything before you start!
 
-The first three examples are for lecture 2. They use variables, arithmetic and
-`print()`. Leave the optional fourth example until you have studied `for` loops.
-Each example contains **one deliberate bug**.
+These three examples are for lecture 2. They start with variables and `print()`,
+then introduce choosing with `if` and repeating with `for`. Each example
+contains **one deliberate bug**.
 
 ## A routine for finding bugs
 
@@ -52,76 +52,75 @@ you run the code.
 - Correct the name, remove your diagnostic print and rerun the whole block.
   Does it print the expected area?
 
-## Example 2: it runs, but is the answer right?
+## Example 2: choosing the right thermostat message
 
 Work through this example together.
 
-The program should calculate the perimeter of a rectangle with length 5 and
-width 3, then print **16**. The perimeter is the sum of all four sides.
+An `if` checks a condition: it is either `True` or `False`. The indented lines
+under it run only when the condition is `True`. An `else` provides an alternative
+when its condition is `False`. A conditional chooses what to do; it is not a
+loop, which repeats instructions.
+
+The thermostat should print **exactly one** message:
+
+- `Heating` below 18°C.
+- `Cooling` above 24°C.
+- `Comfortable` from 18°C to 24°C, including both boundaries.
+
+At 16°C, the expected output is **Heating only**.
 
 ```runnable lang="python"
-length = 5
-width = 3
-perimeter = 2 * length + width
-print(perimeter)
+temperature = 16
+if temperature < 18:
+    print('Heating')
+if temperature > 24:
+    print('Cooling')
+else:
+    print('Comfortable')
 ```
 
-The current program prints **13**, without an error message.
+The current program prints **Heating and Comfortable on separate lines**.
 
-- Calculate the perimeter by hand. How many lengths and how many widths must
-  you include?
-- Python performs multiplication before addition. Which value does the current
-  expression double?
-- Print `2 * length` and `width` separately to see the two contributions.
-- Where could parentheses make Python add the length and width before doubling?
-  Change the calculation, remove diagnostic prints and check that the output is
-  now 16.
+- Before the branches, add `print('Below 18:', temperature < 18)` and
+  `print('Above 24:', temperature > 24)`. Which condition is `True`?
+- Follow the code from top to bottom. Which `if` does the `else` belong to?
+- The two `if` statements make separate decisions. Use `elif` ("else if") to
+  link the second condition to the first: it is checked only when the first
+  condition was false.
+- Remove the diagnostic prints and rerun. Check temperatures 16, 21 and 26°C:
+  expect `Heating`, `Comfortable` and `Cooling`, respectively, one message each.
+- Test the boundaries too: 18 and 24°C should both print `Comfortable`, once.
 
-## Example 3: printing the wrong value
+## Example 3: keeping a running total
 
 Try this example yourself.
 
-Each item costs 4 pounds and you buy 3 items. The program should calculate the
-total cost and print **12**.
+A `for` loop takes each value from a list in turn. Here `distance` is first 2,
+then 3, then 4 metres. The indented lines repeat for each distance. An unindented
+line after the loop runs when the loop finishes.
+
+`total = total + distance` adds the current distance to the running total. The
+program should add all three distances and print **9 once**, after the loop.
 
 ```runnable lang="python"
-price = 4
-quantity = 3
-total = price * quantity
-print(price)
+for distance in [2, 3, 4]:
+    total = 0
+    total = total + distance
+print(total)
 ```
 
 The current program prints **4**.
 
-- Add a temporary `print(total)` immediately after the calculation. Is the
-  calculated total correct?
-- Follow the value from the calculation to the original final line. Which
-  variable does that line actually print?
-- Change the original output line, remove your diagnostic print and rerun.
-  Does the program print the total once?
-
-## Optional extension: when does a line run?
-
-**Attempt this only after you have learned about `for` loops.**
-
-The program should add 1, 2 and 3, then print **only the final total, 6**, once.
-
-```runnable lang="python"
-total = 0
-for number in [1, 2, 3]:
-    total = total + number
-    print(total)
-```
-
-The current program prints **1, 3 and 6 on separate lines**. In Python,
-indentation determines which lines belong to the loop. An indented line in this
-loop runs once for each value of `number`.
-
-- Trace the loop on paper. Make a table with columns for `number`, `total` after
-  the addition, and what gets printed.
-- Should the print happen during every repetition, or after the loop finishes?
-- Change **only the indentation** of the print line. Rerun the whole block,
-  starting with `total = 0`, and check that the only output is 6.
+- Inside the loop, immediately after the addition, add
+  `print('distance:', distance, 'total:', total)` with the same indentation.
+- Trace each repetition. The diagnostic totals are 2, 3 and 4; they should be
+  2, 5 and 9. Where does the program lose the distances already added?
+- Which statement resets the total? Should it run before every addition, or
+  just once before the loop?
+- Move the initialisation to run once before the loop, checking the indentation
+  of the lines that should still repeat.
+- Remove your diagnostic print and rerun the whole block. Does the program
+  print the expected total, 9, once?
 
 ## What did you learn from the bug?
 

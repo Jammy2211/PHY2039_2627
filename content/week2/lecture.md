@@ -51,71 +51,115 @@ area = lenght * width
 print(area)
 ```
 
+---
+
+## What the error tells us
+
 * Read the last line of the error: `NameError` means an undefined name. Compare spellings on the failing line and the assignments.
 * Why put the diagnostic print **before** the failing line?
 * Edit the correction live, remove the diagnostic print and rerun. Expected: **15**.
 
 ---
 
-## Spot the bug: rectangle perimeter
+## Choosing with `if`
 
-A rectangle has length 5 and width 3. Its perimeter is the sum of all four sides: **16**.
+* An `if` checks a condition, such as `temperature < 18`: it is either `True` or `False`.
+* Its indented lines run only when the condition is `True`.
+* An `else` provides an alternative when its condition is `False`.
+* A conditional **chooses** what to do; a loop **repeats** instructions.
 
-**Before running:** predict what this code will print. Can you spot the bug?
+---
+
+## Spot the bug: thermostat
+
+Print **one** message: `Heating` below 18°C, `Cooling` above 24°C, or `Comfortable` from 18°C to 24°C inclusive.
+
+At 16°C, expect **Heating only**. Predict what happens, then run.
 
 ```runnable lang="python"
-length = 5
-width = 3
-perimeter = 2 * length + width
-print(perimeter)
+temperature = 16
+if temperature < 18:
+    print('Heating')
+if temperature > 24:
+    print('Cooling')
+else:
+    print('Comfortable')
 ```
 
 ---
 
-## Diagnose: rectangle perimeter
+## Diagnose: thermostat
+
+Inspect both conditions, then follow the branches.
 
 ```runnable lang="python"
-length = 5
-width = 3
-print(2 * length, width)
-perimeter = 2 * length + width
-print(perimeter)
-```
-
-* Which sides do the printed contributions include?
-* Multiplication happens before addition. Where could brackets change that order?
-* Edit the correction live, remove the diagnostic print and rerun. Expected: **16**.
-
----
-
-## Spot the bug: shopping total
-
-Each item costs 4 pounds and you buy 3 items. This program should print the total cost: **12**.
-
-**Before running:** predict what this code will print. Can you spot the bug?
-
-```runnable lang="python"
-price = 4
-quantity = 3
-total = price * quantity
-print(price)
+temperature = 16
+print('Below 18:', temperature < 18)
+print('Above 24:', temperature > 24)
+if temperature < 18:
+    print('Heating')
+if temperature > 24:
+    print('Cooling')
+else:
+    print('Comfortable')
 ```
 
 ---
 
-## Diagnose: shopping total
+## Which `if` owns the `else`?
+
+* At 16°C, the first condition is `True`; the second is `False`. Which messages appear?
+* The `else` belongs to the **second** `if`. The two `if` statements make separate decisions.
+* Use `elif` ("else if") to link the second condition to the first. It is checked only if the first condition was false.
+* Edit live and remove the diagnostic prints. Test 16, 21 and 26°C: expect `Heating`, `Comfortable` and `Cooling`, respectively.
+* Also test the boundaries: 18 and 24°C should both print `Comfortable`, once.
+
+---
+
+## Repeating with `for`
+
+* `for distance in [2, 3, 4]:` takes each distance in turn: 2, then 3, then 4 metres.
+* The indented lines repeat for each distance; an unindented line after the loop runs when it finishes.
+* `total = total + distance` adds the current distance to the running total.
+* The running total must retain the distances already added.
+
+---
+
+## Spot the bug: total distance
+
+Add three distances: 2, 3 and 4 metres. Print **9 once**, after the loop.
+
+Predict the output, then run. Which lines repeat?
 
 ```runnable lang="python"
-price = 4
-quantity = 3
-total = price * quantity
+for distance in [2, 3, 4]:
+    total = 0
+    total = total + distance
 print(total)
-print(price)
 ```
 
-* Is the **calculated total** correct?
-* Which variable does the **original final line** print?
-* Edit that line live, remove the diagnostic print and rerun. Expected: **12**, once.
+---
+
+## Diagnose: total distance
+
+Inspect the running total after each addition.
+
+```runnable lang="python"
+for distance in [2, 3, 4]:
+    total = 0
+    total = total + distance
+    print('distance:', distance, 'total:', total)
+print(total)
+```
+
+---
+
+## What should run only once?
+
+* The diagnostic totals are **2, 3, 4**. We expected **2, 5, 9**. Where is the earlier distance lost?
+* Which statement resets the total? Should it run before every addition, or just once before the loop?
+* Move the initialisation to run once before the loop. Check the indentation of the lines that should still repeat.
+* Remove the diagnostic print and rerun the whole block. Expected: **9**, once.
 
 ---
 
@@ -293,40 +337,36 @@ plt.plot(x1,f,'-')
 
 ## From x values to fitted y values
 
-`polyfit` has given us `p`: the gradient `p[0]` and intercept `p[1]`.
-We now evaluate that fitted line at 100 chosen x values:
+`p[0]` is the fitted gradient; `p[1]` is the intercept.
 
 ```python
-x1 = np.linspace(0, 5, 100)  # x coordinates at which to evaluate the line
-f = p[0] * x1 + p[1]        # corresponding fitted y coordinates
+x1 = np.linspace(0, 5, 100)
+f = p[0] * x1 + p[1]
 ```
 
-NumPy applies the calculation to each entry of `x1`. Written out explicitly:
+Each x value gives one fitted y value:
 
 ```python
 f[0] = p[0] * x1[0] + p[1]
 f[1] = p[0] * x1[1] + p[1]
-# ... and so on for all 100 entries.
 ```
 
-`plt.plot(x1, f)` plots these pairs of x and fitted y values to draw the line.
+`plt.plot(x1, f)` draws the fitted line.
 
 ---
 
 ## The same calculation with `polyval`
 
-These two lines give the same fitted y values at the same x values:
+These are equivalent:
 
 ```python
-f = p[0] * x1 + p[1]  # write out the fitted line ourselves
-f = np.polyval(p, x1)  # evaluate the polynomial with coefficients p at x1
+f = p[0] * x1 + p[1]
+f = np.polyval(p, x1)
 ```
 
-`polyfit` finds the coefficients `p`; `polyval` uses them to calculate `f`.
-It does not fit the data again. We still plot the result with `plt.plot(x1, f)`.
+**`polyfit` finds `p`; `polyval` evaluates it at `x1`.** No new fit.
 
-The same call also works for higher degree polynomials. For a quadratic,
-`np.polyval(p, x1)` evaluates:
+For a quadratic, the same `polyval` call replaces:
 
 ```python
 f = p[0] * x1**2 + p[1] * x1 + p[2]
