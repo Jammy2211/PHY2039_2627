@@ -291,19 +291,45 @@ plt.plot(x1,f,'-')
 
 ---
 
-## `polyval`
+## From x values to fitted y values
 
-When fitting a straight line it's not too tedious to define use the syntax
+`polyfit` has given us `p`: the gradient `p[0]` and intercept `p[1]`.
+We now evaluate that fitted line at 100 chosen x values:
 
 ```python
-f = p[0]*x1+p[1]
+x1 = np.linspace(0, 5, 100)  # x coordinates at which to evaluate the line
+f = p[0] * x1 + p[1]        # corresponding fitted y coordinates
 ```
-But when fitting higher degree polynomials this can quickly become tiresome.
 
-We can use the function `polyval` to replace the above code with
+NumPy applies the calculation to each entry of `x1`. Written out explicitly:
 
 ```python
-f = np.polyval(p,x1)
+f[0] = p[0] * x1[0] + p[1]
+f[1] = p[0] * x1[1] + p[1]
+# ... and so on for all 100 entries.
+```
+
+`plt.plot(x1, f)` plots these pairs of x and fitted y values to draw the line.
+
+---
+
+## The same calculation with `polyval`
+
+These two lines give the same fitted y values at the same x values:
+
+```python
+f = p[0] * x1 + p[1]  # write out the fitted line ourselves
+f = np.polyval(p, x1)  # evaluate the polynomial with coefficients p at x1
+```
+
+`polyfit` finds the coefficients `p`; `polyval` uses them to calculate `f`.
+It does not fit the data again. We still plot the result with `plt.plot(x1, f)`.
+
+The same call also works for higher degree polynomials. For a quadratic,
+`np.polyval(p, x1)` evaluates:
+
+```python
+f = p[0] * x1**2 + p[1] * x1 + p[2]
 ```
 
 ---
