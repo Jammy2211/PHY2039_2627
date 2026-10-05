@@ -1,27 +1,139 @@
 ![PHY2039](/static/images/phy2039-logo.png){style="width: 600px;"}
 
-# Lecture 2 - Curve Fitting
-
----
-
-## 
-
-* Assessment 1
-    * released Friday 9th October, due Friday 23rd October (both at 16:00)
-    * worth **5%** of the module grade
-    * based on Weeks 1 and 2
-    * Numbas test with supplementary plot upload
+# Lecture 2 - Bug Fixing & Curve Fitting
 
 ---
 
 ## Today
 
+* Bug fixing
 * Working with scripts
 * Recap of `polyfit`
 * Reading in data
 * Further curve fitting
     * Higher degree polynomials
     * Fitting other functions
+
+---
+
+## Finding bugs
+
+A **bug** is a mistake in a program. Finding and fixing bugs is a normal part of writing Python.
+
+1. **Predict** the intended result, then **run** the code.
+2. **Read** the error, if there is one; **inspect** values with `print()`.
+3. **Change one thing**, then **rerun** and check your prediction.
+
+---
+
+## Spot the bug: rectangle area
+
+A rectangle has length 5 and width 3. This program should print its area: **15**.
+
+**Before running:** predict what will happen. Can you spot the bug?
+
+```runnable lang="python"
+length = 5
+width = 3
+area = lenght * width
+print(area)
+```
+
+---
+
+## Diagnose: rectangle area
+
+```runnable lang="python"
+length = 5
+width = 3
+print(length, width)
+area = lenght * width
+print(area)
+```
+
+* Read the last line of the error: `NameError` means an undefined name. Compare spellings on the failing line and the assignments.
+* Why put the diagnostic print **before** the failing line?
+* Edit the correction live, remove the diagnostic print and rerun. Expected: **15**.
+
+---
+
+## Spot the bug: rectangle perimeter
+
+A rectangle has length 5 and width 3. Its perimeter is the sum of all four sides: **16**.
+
+**Before running:** predict what this code will print. Can you spot the bug?
+
+```runnable lang="python"
+length = 5
+width = 3
+perimeter = 2 * length + width
+print(perimeter)
+```
+
+---
+
+## Diagnose: rectangle perimeter
+
+```runnable lang="python"
+length = 5
+width = 3
+print(2 * length, width)
+perimeter = 2 * length + width
+print(perimeter)
+```
+
+* Which sides do the printed contributions include?
+* Multiplication happens before addition. Where could brackets change that order?
+* Edit the correction live, remove the diagnostic print and rerun. Expected: **16**.
+
+---
+
+## Spot the bug: shopping total
+
+Each item costs 4 pounds and you buy 3 items. This program should print the total cost: **12**.
+
+**Before running:** predict what this code will print. Can you spot the bug?
+
+```runnable lang="python"
+price = 4
+quantity = 3
+total = price * quantity
+print(price)
+```
+
+---
+
+## Diagnose: shopping total
+
+```runnable lang="python"
+price = 4
+quantity = 3
+total = price * quantity
+print(total)
+print(price)
+```
+
+* Is the **calculated total** correct?
+* Which variable does the **original final line** print?
+* Edit that line live, remove the diagnostic print and rerun. Expected: **12**, once.
+
+---
+
+## Debugging habits
+
+* An error message is **evidence**: use it to locate the problem.
+* Code that runs can still be wrong: compare with an expected result.
+* Rerun the **whole block**, including its starting assignments, after a correction.
+
+---
+
+## Assessment 1
+
+* Assessment 1
+    * released Friday 9th October, due Friday 23rd October (both at 16:00)
+    * worth **5%** of the module grade
+    * based on Weeks 1 and 2
+    * Numbas test with supplementary plot upload
 
 ---
 
