@@ -414,6 +414,29 @@ $$Y = bX + c$$
 
 ----
 
+### The transform written out
+
+Transform $y = ax^b$ into a linear equation by introducing new variables $X$ and $Y$.
+For $x > 0$ and $a > 0$ (so $y > 0$), use natural logarithms:
+
+$$\ln(y) = \ln(ax^b) = \ln(a) + b\ln(x).$$
+
+Define the transformed coordinates and intercept:
+
+$$X = \ln(x), \qquad Y = \ln(y), \qquad c = \ln(a).$$
+
+The transformed points $(X, Y)$ lie on a straight line:
+
+$$Y = bX + c \qquad \text{(gradient } b,\; \text{intercept } c\text{).}$$
+
+After fitting that line, transform back:
+
+$$a = e^c, \qquad y = e^Y = e^{bX+c} = e^c x^b = ax^b.$$
+
+The gradient gives $b$ directly; exponentiate only the intercept to recover $a$.
+
+----
+
 If we suspect that a dataset obeys a power law we can use the above method to model it, as follows.
 
 1. Transform the data by taking $\log$ of independent and dependent variables.
