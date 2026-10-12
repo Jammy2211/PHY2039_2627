@@ -63,6 +63,87 @@ where the fitting parameters are $a$,$b$, $c$.
 
 ---
 
+## From a quadratic to three equations
+
+Start with the usual quadratic: $y = ax^2 + bx + c$.
+
+The data give us $x$ and $y$; the **same three unknowns** $a$, $b$, $c$ must work for every point.
+
+Substitute each point $(1,5)$, $(2,8)$ and $(3,10)$:
+
+$$
+\begin{aligned}
+x=1:\quad a(1)^2 + b(1) + c &= 5 &\Rightarrow\quad a+b+c &= 5 \\
+x=2:\quad a(2)^2 + b(2) + c &= 8 &\Rightarrow\quad 4a+2b+c &= 8 \\
+x=3:\quad a(3)^2 + b(3) + c &= 10 &\Rightarrow\quad 9a+3b+c &= 10
+\end{aligned}
+$$
+
+Although the curve is quadratic in $x$, these equations are **linear in the unknowns** $a$, $b$, $c$: none of them is squared or multiplied by another unknown.
+
+---
+
+## From three equations to one matrix equation
+
+Put the coefficients of $a$, $b$, $c$ into each row, in that order:
+
+$$
+\underbrace{\begin{pmatrix}
+1 & 1 & 1 \\
+4 & 2 & 1 \\
+9 & 3 & 1
+\end{pmatrix}}_{A:\ \text{known coefficients}}
+\underbrace{\begin{pmatrix} a \\ b \\ c \end{pmatrix}}_{\mathbf{p}:\ \text{unknowns}}
+=
+\underbrace{\begin{pmatrix} 5 \\ 8 \\ 10 \end{pmatrix}}_{\mathbf{y}:\ \text{known data}}
+\qquad A\mathbf{p}=\mathbf{y}.
+$$
+
+**Check the second row:** matrix multiplication gives $4a+2b+1c=8$, exactly our second equation.
+
+Each data point supplies one row $[x_i^2,\ x_i,\ 1]$; the final column is $1$ because $c=1\times c$.
+
+Here three distinct $x$ values determine an exact quadratic. With more data points, `polyfit` finds the coefficients that minimise the sum of squared residuals.
+
+---
+
+## Challenge: solve a different linear system
+
+Find $a$ and $b$ such that
+
+$$
+\begin{aligned}
+2a+3b &= 7 \\
+a-b &= 1
+\end{aligned}
+$$
+
+**Why not `polyfit`?** It fits $y=ax+b$, with coefficient rows $[x_i,\ 1]$. Our system needs a general linear-system solver.
+
+**Your challenge — use Google, not AI:**
+
+1. Write the system as a $2\times2$ matrix equation.
+2. Find and use a suitable Python function.
+3. Substitute your answer back to check it.
+
+---
+
+## Now try ChatGPT: two different prompts
+
+Use each prompt in a **new chat** to solve the same system using Python.
+
+**Prompt 1 — in a rush**
+
+> I'm in a rush. Solve $2a+3b=7$ and $a-b=1$ using Python. Give me the code and answer as quickly as possible, with no explanation.
+
+**Prompt 2 — understand the method**
+
+> Solve $2a+3b=7$ and $a-b=1$ using Python. Explain the method and show the working: how to form the matrix equation, what the code does, and how to check the answer.
+
+**Compare:** Run both versions. Are the answers correct? Which response helps you solve a similar problem yourself?
+
+---
+
 In weeks to come we'll see further examples of systems that can be converted into linear algebra. E.g.
 
 \begin{align}
