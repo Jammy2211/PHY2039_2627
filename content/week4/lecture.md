@@ -367,6 +367,23 @@ $$ |x_n - x_*| \le \frac{x_u - x_d}{2^n} $$
 
 ---
 
+### Your turn: investigate the starting bounds
+
+Run your bisection code for $f(x) = x^2 - 2$ with these starting bounds:
+
+```python
+xd = 2.0
+xu = 3.0
+```
+
+Add `print` statements inside your loop to show `xd`, `xu`, `xmid`, and `f(xmid)` at each step.
+
+* What value does your code approach?
+* Is this actually a root? Use your printed function values to check.
+* Why does this happen with these starting bounds?
+
+---
+
 ### The Newton-Raphson Method
 
 * Make an initial guess $x_n$.
