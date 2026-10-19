@@ -244,6 +244,50 @@ function showSlides(n) {
 
 ---
 
+### Your turn: one step of bisection
+
+Write Python code to perform **one step** of the bisection method for $f(x) = x^2 - 2$.
+
+**Inputs:**
+
+```python
+xd = 0.5
+xu = 2.0
+```
+
+Calculate the midpoint, evaluate the function there, and use an `if` statement to update the correct bound.
+
+**Expected output:**
+
+```text
+Midpoint: 1.25
+f(midpoint): -0.4375
+New bounds: 1.25 2.0
+```
+
+Stop after one step — no loop needed.
+
+---
+
+### Your turn: repeat the bisection step
+
+Continue from your updated bounds: `xd = 1.25`, `xu = 2.0`.
+
+Write Python code to perform **steps 2 and 3**. Check your results against:
+
+| Step | Midpoint | f(midpoint) | New bounds |
+|---|---:|---:|---|
+| 2 | 1.625 | 0.640625 | 1.25, 1.625 |
+| 3 | 1.4375 | 0.06640625 | 1.25, 1.4375 |
+
+**Now put it all together:** reset your bounds to `xd = 0.5`, `xu = 2.0`, and use a `for` loop to perform **30 bisection steps**.
+
+Print your estimate of the root to **8 decimal places**.
+
+**Expected answer:** `1.41421356`
+
+---
+
 ### When to stop?
 
 In practice we are free to choose when to stop our algorithm i.e. when we have found the root to a desired degree of precision.
