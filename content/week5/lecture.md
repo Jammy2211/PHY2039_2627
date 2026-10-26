@@ -318,6 +318,19 @@ print(r)
 
 ----
 
+## Investigate SciPy fsolve
+
+Use `scipy.optimize.fsolve` to find a root of $f(x) = x^2 - 2$.
+
+* Start with an initial guess of **2.0**. Repeat with **-2.0**.
+* Compare your answers with bisection, Newton-Raphson and secant. Use starting values near the same root.
+* Check $f(x)$ at each answer. How close is it to zero?
+* **Research:** use the official SciPy documentation to find out which method `fsolve` uses. Is it one of the methods we implemented?
+
+Write two sentences explaining what you found, with a link to your source.
+
+---
+
 ## Newton-Raphson sensitivity
 
 The use of the tangent to find the next estimate means that the Newton-Raphson method is (extremely) sensitive to initial conditions.
