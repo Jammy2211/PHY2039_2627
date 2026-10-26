@@ -12,206 +12,76 @@
 
 ---
 
-### The bisection method
+### Handling errors with ValueError
 
-Last week we used the bisection method to estimate roots of a function
+A function can reject unsuitable inputs.
 
----
+For bisection, the starting bounds must bracket a root.
 
 ```python
-# The function whose roots we wish to find
-def func(x):
-    return x**2-2
-
-xd = 1        # Initial lower bound
-xu = 2        # Initial upper bound
-eps = 1e-10   # Tolerance
-
-while abs(xu - xd) > eps:
-
-    # Find the midpoint
-    xmid = (xd+xu)/2
-
-    # Evaluate at xmid and decide how to proceed
-    if func(xmid) > 0:
-        xu = xmid
-    else:
-        xd = xmid
+if f(xd) * f(xu) > 0:
+    raise ValueError("Invalid bounds.")
 ```
 
-----
-
-### What can break this algorithm?
-
-* If function has no roots i.e. $f(x)=e^x$.
-* If initial bounds are chosen incorrectly e.g. $f(x_u), f(u_d) > 0$.
-* ...
+`raise ValueError` stops the calculation with a message.
 
 ---
 
-### Handling errors
-
-We can make the algorithm more robust to these and other problems by writing it as a (Python) function and raising errors. E.g.
+### Bisection with an error check
 
 ```python
-raise ValueError
-```
-
-
----
-
-```python
-
-def bisection(f,xd,xu,eps):
-
-    if f(xd)*f(xu) > 0:
-        raise ValueError("Function does not change sign between bounds.")
-
+def bisection(f, xd, xu, eps):
+    if f(xd) * f(xu) > 0:
+        raise ValueError("Bounds must bracket a root.")
     while xu - xd > eps:
-        xmid = (xd+xu)/2
-        
-        if f(xmid)*f(xu) > 0:
+        xmid = (xd + xu) / 2
+        if f(xmid) == 0:
+            return xmid
+        if f(xd) * f(xmid) <= 0:
             xu = xmid
         else:
             xd = xmid
-
-    return xmid
-
-bisection(lambda x : x**2 - 2,1,2,1e-10)
+    return (xd + xu) / 2
 ```
 
 ---
 
 ### Lambda functions
 
-It can be tedious to formally define functions if we only need to use them once. The **lambda** construction allows us to quickly define a single-use function via the syntax `lambda arguments : expression` e.g.
+A `lambda` creates a small function from a **single expression**:
 
 ```python
-lambda x,y : x**y
+lambda x: x - 1
 ```
 
-Note that this can only be used to produce functions that return an expression in their arguments i.e. the function `bisection` defined above cannot be written as a lambda function.
+Here, `x` is the input and `x - 1` is the returned value.
+
+Use this when passing a short function directly to another function.
+
+A lambda cannot contain the loops and statements in our `bisection` function.
 
 ---
 
-## The Newton-Raphson method
+### With and without lambda
 
-We also covered the Newton-Raphson root finding method:
+Find a root of $f(x) = x - 1$.
 
-* Make an initial guess $x_n$.
+```python
+# Without lambda
+def f(x):
+    return x - 1
 
-* Find the gradient at $f(x_n)$, and locate the intersection of the associated tangent and the $x$ axis.
+root = bisection(f, 0, 3, 1e-6)
 
-* This point will generally be closer to the root. Define this as $x_{n+1}$ and repeat until the value converges sufficiently.
+# With lambda
+root = bisection(lambda x: x - 1, 0, 3, 1e-6)
+```
 
----
-
-<div class="slideshow-container">
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation0.png" style="width:100%">
-    <!--<div class="text">Caption Text</div>-->
-  </div>
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation1.png" style="width:100%">
-    <!--<div class="text">Caption Text</div>-->
-  </div>
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation2.png" style="width:100%">
-  </div>
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation3.png" style="width:100%">
-  </div>
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation4.png" style="width:100%">
-  </div> 
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation5.png" style="width:100%">
-  </div> 
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation6.png" style="width:100%">
-  </div> 
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation7.png" style="width:100%">
-  </div> 
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation8.png" style="width:100%">
-  </div> 
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation9.png" style="width:100%">
-  </div> 
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation10.png" style="width:100%">
-  </div> 
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation11.png" style="width:100%">
-  </div> 
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation12.png" style="width:100%">
-  </div> 
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation13.png" style="width:100%">
-  </div> 
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation14.png" style="width:100%">
-  </div> 
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation15.png" style="width:100%">
-  </div> 
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation16.png" style="width:100%">
-  </div>        
-  <div class="mySlides2">
-    <img src="../../static/images/week4/newton/newton_animation17.png" style="width:100%">
-  </div> 
-</div>
-<br>
-
-<div class="range-slider-container">
-  <div class="go-left2" onclick="plusDivs2(-1)">&#10094;</div>
-  <input type="range" class="range-slider" id="slider2" min="1" max="18" value="1" step="1">
-  <div class="go-right2" onclick="plusDivs2(1)">&#10095;</div>
-</div>
-
-
-<script>
-let slideIndex2 = 1;
-showSlides2(slideIndex2);
-
-let slider2 = document.getElementById("slider2");
-
-slider2.addEventListener("input", function() {
-  showSlides2(parseInt(slider2.value));
-});
-
-function plusDivs2(n) {
-    showSlides2(slideIndex2 += n);
-    slider2.value = parseInt(slider2.value) + n
-}
-
-function showSlides2(n) {
-  let i;
-  let slides = document.getElementsByClassName("mySlides2");
-  let slidesnext = document.getElementsByClassName("go-right2")[0];
-  let slidesprevious = document.getElementsByClassName("go-left2")[0];
-
-  if (n > slides.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex2 = slides.length}
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";  
-  }
-  slideIndex2 = n; 
-  slides[slideIndex2-1].style.display = "block";  
-  slidesnext.style.display = "block";
-  slidesprevious.style.display = "block";
-  if (n == 1){slidesprevious.style.display = "none";}
-  if (n == 18){slidesnext.style.display = "none";}
-
-}
-</script>
+Both calls give the same root estimate: approximately 1.
 
 ---
 
-### animations
+### Animations
 
 Find the two Python files for Week 5:
 
@@ -374,7 +244,11 @@ By considering the formulae for the secants between $x_{n-1}$ and $x_n$ we obtai
 
 $$ x_{n}=x_{n-1}-f(x_{n-1}){\frac {x_{n-1}-x_{n-2}}{f(x_{n-1})-f(x_{n-2})}} $$
 
-We can use this to implement the secant method in Python.
+Open [secant_animation.py](../../static/code/week5/secant_animation.py).
+
+Replace `next_x = None` in **STUDENT TASK** using this formula.
+
+In the code, `x0` is $x_{n-2}$ and `x1` is $x_{n-1}$. Run 5 steps.
 
 ---
 
