@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 # 1. SETTINGS ----------------------------------------------------------------
 
 NUMBER_OF_STEPS = 5
-PAUSE_SECONDS = 1.0
+PAUSE_SECONDS = 2.0
 
 X_MIN = -0.25
 X_MAX = 2.5
