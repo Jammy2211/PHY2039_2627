@@ -1,159 +1,127 @@
-"""Bisection: one calculation per Enter keypress.
+"""Edit NUMBER_OF_STEPS, then run the whole file. No keypresses are needed.
 
-Run: python bisection_steps.py
-Click the PLOT WINDOW and press Enter to advance; values print in the console.
-In Spyder use an external interactive plot (e.g. run %matplotlib qt first).
-Edit the settings below, then rerun to restart. Requires numpy and matplotlib.
+For a moving plot, use an external plot window in Spyder or PyCharm.
+An inline plot viewer may show only the final image.
 """
 
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 
-# STUDENT SETTINGS ------------------------------------------------------------
-def function(x):
+
+# 1. SETTINGS ----------------------------------------------------------------
+
+NUMBER_OF_STEPS = 5
+PAUSE_SECONDS = 1.0
+
+X_MIN = -0.25
+X_MAX = 2.5
+
+LEFT = 0.0
+RIGHT = 2.0
+
+
+# 2. THE FUNCTION -------------------------------------------------------------
+
+def f(x):
     return x**2 - 2
 
-A, B = 0.0, 2.0
-X_MIN, X_MAX = -0.25, 2.5
-X_TOLERANCE = 1e-5       # Maximum midpoint error for a continuous function.
-MAX_ITERATIONS = 50
-TITLE = "Bisection"
+
+# 3. PREPARE THE FIGURE -------------------------------------------------------
+
+if not isinstance(NUMBER_OF_STEPS, int) or NUMBER_OF_STEPS < 1:
+    raise ValueError("NUMBER_OF_STEPS must be a positive integer.")
+
+if not np.isfinite(PAUSE_SECONDS) or PAUSE_SECONDS <= 0:
+    raise ValueError("PAUSE_SECONDS must be positive.")
+
+plot_x = np.linspace(X_MIN, X_MAX, 500)
+
+fig, ax = plt.subplots(figsize=(9, 6))
+fig.subplots_adjust(bottom=0.22)
+step_text = fig.text(0.12, 0.04, "", fontsize=11)
 
 
-def algorithm():
-    """Yield one midpoint calculation at a time; assume f is continuous on [a,b]."""
-    a, b = float(A), float(B)
-    if not np.isfinite([a, b, X_TOLERANCE]).all() or a >= b or X_TOLERANCE <= 0:
-        raise ValueError("Use finite a < b and a positive X_TOLERANCE.")
-    if not isinstance(MAX_ITERATIONS, int) or MAX_ITERATIONS < 1:
-        raise ValueError("MAX_ITERATIONS must be a positive integer.")
-    fa, fb = finite_value(function, a), finite_value(function, b)
-    if fa == 0 or fb == 0:
-        root = a if fa == 0 else b
-        yield dict(a=a, b=b, mid=root, fm=0.0, done=True,
-                   message=f"Exact endpoint root: x = {root:.10g} (0 iterations).")
-        return
-    if np.signbit(fa) == np.signbit(fb):
-        raise ValueError("The interval endpoints must have opposite function signs.")
+# 4. BISECTION ---------------------------------------------------------------
+# Assume f is continuous between left and right.
 
-    for n in range(1, MAX_ITERATIONS + 1):
-        mid = a / 2 + b / 2
-        if mid == a or mid == b:
-            raise ValueError("Floating-point precision exhausted; widen the tolerance.")
-        fm = finite_value(function, mid)
-        half_width = b / 2 - a / 2
-        done = fm == 0 or half_width <= X_TOLERANCE
-        keep_left = np.signbit(fa) != np.signbit(fm)
-        decision = "Keep [a, midpoint]." if keep_left else "Keep [midpoint, b]."
-        if done:
-            decision = f"Converged: x ≈ {mid:.10g}; midpoint error ≤ {half_width:.3g}."
-        elif n == MAX_ITERATIONS:
-            decision = "Stopped: iteration limit reached; NOT converged."
-        yield dict(
-            a=a, b=b, mid=mid, fm=fm, done=done or n == MAX_ITERATIONS,
-            message=f"Step {n}: a={a:.8g}, b={b:.8g}, midpoint={mid:.10g}\n"
-                    f"f(a)={fa:.6g}, f(b)={fb:.6g}, f(midpoint)={fm:.6g}\n"
-                    + decision,
-        )
-        if done:
-            return
-        if keep_left:
-            b, fb = mid, fm
-        else:
-            a, fa = mid, fm
+left = LEFT
+right = RIGHT
+
+if not np.isfinite([left, right, f(left), f(right)]).all():
+    raise ValueError("The endpoints and function values must be finite.")
+
+if left >= right or f(left) * f(right) > 0:
+    raise ValueError("Choose LEFT < RIGHT with opposite function signs.")
 
 
-def finite_value(f, x):
-    """Evaluate one real, finite function value."""
-    value = float(f(x))
-    if not np.isfinite(value):
-        raise ValueError(f"Non-finite function value at x = {x:g}.")
-    return value
+for step in range(1, NUMBER_OF_STEPS + 1):
+
+    # Calculate the midpoint.
+    midpoint = (left + right) / 2
+
+    # An endpoint may already be an exact root.
+    if f(left) == 0:
+        midpoint = left
+    elif f(right) == 0:
+        midpoint = right
+
+    f_midpoint = f(midpoint)
+
+    if not np.isfinite(f_midpoint):
+        raise ValueError("The function is not finite at the midpoint.")
+
+    # Decide which half to keep.
+    if f_midpoint == 0:
+        decision = "Exact root found."
+    elif f(left) * f_midpoint < 0:
+        decision = "Keep the left half: replace right with midpoint."
+    else:
+        decision = "Keep the right half: replace left with midpoint."
+
+    # Print this step.
+    print(f"\nStep {step}", flush=True)
+    print(f"  left = {left:.8f}, right = {right:.8f}")
+    print(f"  midpoint = {midpoint:.8f}, f(midpoint) = {f_midpoint:.8f}")
+    print(f"  {decision}", flush=True)
+
+    # Draw the curve, current interval and midpoint.
+    ax.clear()
+    ax.plot(plot_x, f(plot_x), color="navy", label="f(x)")
+    ax.axhline(0, color="black", linewidth=1)
+
+    ax.axvspan(left, right, color="cornflowerblue", alpha=0.2,
+               label="current interval")
+    ax.scatter([left, right], [f(left), f(right)], color="green",
+               label="endpoints")
+    ax.plot([midpoint, midpoint], [0, f_midpoint], "--", color="darkorange")
+    ax.scatter(midpoint, f_midpoint, color="darkorange", label="midpoint")
+
+    ax.set_title(f"Bisection: step {step} of {NUMBER_OF_STEPS}")
+    ax.set_xlabel("x")
+    ax.set_ylabel("f(x)")
+    ax.legend()
+    ax.grid(alpha=0.2)
+
+    step_text.set_text(
+        f"midpoint = {midpoint:.8f}     f(midpoint) = {f_midpoint:.8f}\n"
+        + decision
+    )
+
+    # Show the graph and pause briefly before the next step.
+    plt.pause(PAUSE_SECONDS)
+
+    if f_midpoint == 0 or not plt.fignum_exists(fig.number):
+        break
+
+    # Update the interval.
+    if f(left) * f_midpoint < 0:
+        right = midpoint
+    else:
+        left = midpoint
 
 
-def make_demo():
-    """Create the interactive figure. No iterations run until Enter is pressed."""
-    if not np.isfinite([X_MIN, X_MAX]).all() or X_MIN >= X_MAX:
-        raise ValueError("Choose finite plot limits with X_MIN < X_MAX.")
-    fig, ax = plt.subplots(figsize=(9, 6))
-    fig.subplots_adjust(bottom=0.25)
-    status = fig.text(0.07, 0.04, "Click the plot, then press Enter for step 1.",
-                      fontsize=10, va="bottom")
-    steps = algorithm()
-    finished = False
+print(f"\nLast root estimate: {midpoint:.10f}", flush=True)
+print("Increase NUMBER_OF_STEPS to investigate the accuracy.")
 
-    def background(points=()):
-        # Expand the view if an estimate leaves the original plotting range.
-        low = min([X_MIN, *points])
-        high = max([X_MAX, *points])
-        pad = 0.05 * max(high - low, 1.0)
-        xs = np.linspace(low - pad, high + pad, 800)
-        with np.errstate(all="ignore"):
-            ys = np.asarray(function(xs), dtype=float)
-            ys = np.broadcast_to(ys, xs.shape)
-        if not np.isfinite(ys).any():
-            raise ValueError("No finite function values in the plot range.")
-        ax.clear()
-        ax.plot(xs, np.where(np.isfinite(ys), ys, np.nan), color="navy", label="f(x)")
-        ax.axhline(0, color="black", lw=1)
-        ax.axvline(0, color="grey", lw=0.7)
-        ax.set(xlim=(xs[0], xs[-1]), xlabel="x", ylabel="f(x)",
-               title=TITLE + " — press Enter for one step")
-        ax.grid(alpha=0.2)
-
-    def on_key(event):
-        nonlocal finished
-        if event.key not in ("enter", "return") or finished:
-            return
-        try:
-            step = next(steps)
-            draw_step(step)
-            message = step["message"]
-            finished = step["done"]
-            if not finished:
-                message += "\nPress Enter for the next step."
-        except StopIteration:
-            finished = True
-            message = "Finished. Close the figure or rerun the script."
-        except (ValueError, ArithmeticError) as error:
-            finished = True
-            message = f"Stopped: {error}"
-        status.set_text(message)
-        print(message, flush=True)
-        fig.canvas.draw_idle()
-
-    def draw_step(step):
-        a, b, mid = step["a"], step["b"], step["mid"]
-        background((a, b, mid))
-        ax.axvspan(a, b, color="cornflowerblue", alpha=0.2, label="current bracket")
-        ax.scatter([a, b], [function(a), function(b)], color="forestgreen",
-                   label="endpoints", zorder=4)
-        ax.vlines(mid, 0, step["fm"], color="darkorange", linestyle="--")
-        ax.scatter([mid, mid], [0, step["fm"]], color="darkorange",
-                   label="midpoint", zorder=5)
-        ax.legend(loc="best")
-
-    background()
-    ax.legend(loc="best")
-    fig.canvas.mpl_connect("key_press_event", on_key)
-    print(TITLE, flush=True)
-    print("Click inside the plot window, then press Enter. Close it to quit.",
-          flush=True)
-    return fig
-
-
-def main():
-    # An inline backend produces a static image; it cannot receive Enter events.
-    backend = plt.get_backend().lower()
-    if "inline" in backend or backend in ("agg", "pdf", "svg", "ps", "pgf", "template"):
-        raise RuntimeError(
-            "An interactive Matplotlib backend is required. In Spyder run "
-            "'%matplotlib qt' in its console before running this file. "
-            "From a terminal, use a Python environment with Qt or Tk and a display."
-        )
-    fig = make_demo()
-    plt.show(block=True)
-
-
-if __name__ == "__main__":
-    main()
+# Keep the final graph available.
+plt.show()
