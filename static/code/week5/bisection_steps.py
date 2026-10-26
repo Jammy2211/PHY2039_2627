@@ -1,10 +1,16 @@
 """Edit NUMBER_OF_STEPS, then run the whole file. No keypresses are needed.
 
-For a moving plot, use an external plot window in Spyder or PyCharm.
-An inline plot viewer may show only the final image.
+The animation opens in a separate Tk window, including when run in PyCharm.
+If PyCharm still captures it, disable 'Show plots in tool window' in settings.
 """
 
 import numpy as np
+import matplotlib
+
+# Use a real plot window rather than the IDE's static plot viewer.
+# This must come BEFORE importing pyplot. Tk is included with standard Python.
+matplotlib.use("TkAgg")
+
 import matplotlib.pyplot as plt
 
 
@@ -36,6 +42,7 @@ if not np.isfinite(PAUSE_SECONDS) or PAUSE_SECONDS <= 0:
 
 plot_x = np.linspace(X_MIN, X_MAX, 500)
 
+plt.ion()
 fig, ax = plt.subplots(figsize=(9, 6))
 fig.subplots_adjust(bottom=0.22)
 step_text = fig.text(0.12, 0.04, "", fontsize=11)
@@ -108,9 +115,11 @@ for step in range(1, NUMBER_OF_STEPS + 1):
     )
 
     # Show the graph and pause briefly before the next step.
+    fig.canvas.draw_idle()
     plt.pause(PAUSE_SECONDS)
 
-    if f_midpoint == 0 or not plt.fignum_exists(fig.number):
+    # Stop early only for an exact root, not because an IDE unregisters a plot.
+    if f_midpoint == 0:
         break
 
     # Update the interval.
@@ -124,4 +133,5 @@ print(f"\nLast root estimate: {midpoint:.10f}", flush=True)
 print("Increase NUMBER_OF_STEPS to investigate the accuracy.")
 
 # Keep the final graph available.
-plt.show()
+plt.ioff()
+plt.show(block=True)
