@@ -36,11 +36,9 @@ def f(x):
 
 # 3. PREPARE THE FIGURE -------------------------------------------------------
 
-if not isinstance(NUMBER_OF_STEPS, int) or NUMBER_OF_STEPS < 1:
-    raise ValueError("NUMBER_OF_STEPS must be a positive integer.")
-
-if not np.isfinite(PAUSE_SECONDS) or PAUSE_SECONDS <= 0:
-    raise ValueError("PAUSE_SECONDS must be positive.")
+# Raise an error if the settings would prevent the animation from running.
+if NUMBER_OF_STEPS < 1 or PAUSE_SECONDS <= 0:
+    raise ValueError("Use at least one step and a positive pause time.")
 
 plot_x = np.linspace(X_MIN, X_MAX, 500)
 
@@ -56,9 +54,7 @@ step_text = fig.text(0.12, 0.04, "", fontsize=11)
 left = LEFT
 right = RIGHT
 
-if not np.isfinite([left, right, f(left), f(right)]).all():
-    raise ValueError("The endpoints and function values must be finite.")
-
+# Bisection needs a valid starting interval.
 if left >= right or f(left) * f(right) > 0:
     raise ValueError("Choose LEFT < RIGHT with opposite function signs.")
 
