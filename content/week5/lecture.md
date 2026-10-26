@@ -211,6 +211,55 @@ function showSlides2(n) {
 
 ---
 
+### animations
+
+Find the two Python files for Week 5:
+
+* [bisection_steps.py](../../static/code/week5/bisection_steps.py)
+* [newton_raphson_steps.py](../../static/code/week5/newton_raphson_steps.py)
+
+**Read each script, then run it.** Change `NUMBER_OF_STEPS` and run it again.
+
+Our Python programs are becoming more complex: we now combine **loops** to repeat calculations, **if statements** to make decisions, and **Matplotlib** to display each step.
+
+Can you identify these three parts in each script and explain how they work together?
+
+---
+
+## Challenge: a very flat root
+
+Try $f(x) = (x-1)^7$ with both methods. Run **5 steps**, then **10**.
+
+```python
+def f(x):
+    return (x - 1)**7
+def derivative(x):
+    return 7 * (x - 1)**6
+```
+
+* **Bisection:** `LEFT = 0.0`, `RIGHT = 3.0`.
+* **Newton-Raphson:** `STARTING_X = 2.25`.
+* Compare $|x-1|$ with $|f(x)|$. Does small $|f(x)|$ mean an accurate root?
+
+---
+
+## Challenge: an apparent root that isn't one
+
+Try $f(x) = 1/x$ with both methods. Run **5 steps**, then **10**.
+
+```python
+def f(x):
+    return 1 / x
+def derivative(x):
+    return -1 / x**2
+```
+
+* **Bisection:** `LEFT = -1.0`, `RIGHT = 2.0`.
+* **Newton-Raphson:** `STARTING_X = 1.0`.
+* Where do $x$ and $f(x)$ go? Is there a root? Which bisection assumption fails?
+
+---
+
 ### The Secant method
 
 A secant line, also simply called a secant, is a line passing through two points of a curve. We can use secants to estimate roots as follows:
@@ -352,7 +401,7 @@ print("Root found at {} after {} iterations".format(r,n))
 
 We've now seen three root finding methods. It is natural to ask which method is best in various situations:
 
-* Bisection: will always converge for continuous functions $f$.
+* Bisection: converges for a continuous function when the starting interval brackets a root.
 * Newton-Raphson: generally faster, but requires computation of derivative $f'$.
 * Secant: also generally faster than bisection, but is not guaranteed to converge for continuous functions.
 
