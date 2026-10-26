@@ -252,22 +252,24 @@ In the code, `x0` is $x_{n-2}$ and `x1` is $x_{n-1}$. Run 5 steps.
 
 ---
 
+## Secant method: solution
+
+Replace `next_x = None` with:
+
 ```python
-def secant(f,x0,x1,eps):
-
-    n = 0
-    
-    while abs(x1 - x0) > eps:
-        x2 = x1 - f(x1)*(x1-x0)/(f(x1)-f(x0))
-        x0, x1 = x1, x2
-        n += 1
-        
-    return x1, n
-
-r,n = secant(lambda x : x**2 - 2, 3, 4, 1e-6)
-
-print("Root found at {} after {} iterations".format(r,n))
+next_x = x1 - f1 * (x1 - x0) / (f1 - f0)
 ```
+
+The script already calculates `f0 = f(x0)` and `f1 = f(x1)`.
+
+After plotting, it moves the estimates along:
+
+```python
+x0 = x1
+x1 = next_x
+```
+
+Run [secant_solution.py](../../static/code/week5/secant_solution.py) to compare.
 
 ---
 
