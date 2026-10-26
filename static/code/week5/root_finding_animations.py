@@ -1,5 +1,8 @@
 """Animate the bisection and Newton--Raphson root-finding methods.
 
+Original timed prototype. For the reviewed, Enter-controlled teaching versions,
+run bisection_steps.py or newton_raphson_steps.py in this directory instead.
+
 Run this file in Spyder, or from a terminal with:
 
     python root_finding_animations.py
