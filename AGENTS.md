@@ -11,9 +11,13 @@
 - Active course material belongs in the top-level `content/`, `static/`,
   `notebooks/`, and related source folders. Every `source` named by
   `config.yml` must exist before changes are pushed.
-- `archive/2526/` is the untouched reference snapshot of the 2025–26 course.
-  Do not edit it unless the user explicitly asks. Make 2026–27 changes in the
-  active top-level copies.
+- The 2025–26 course is the separate repository
+  `https://github.com/Jammy2211/PHY2039_2526`, checked out locally at
+  `../../2526/site/`. Treat it as a read-only reference; make 2026–27 changes
+  here.
+- Locally this repository lives at `PHY2039/2627/site/`. Exams, Numbas
+  exports, exported handouts and admin spreadsheets for the year sit beside it
+  in `PHY2039/2627/` and must never be added to this public repository.
 - The active course initially mirrors the full 2025–26 structure. Do not
   proactively correct dates or academic-year references inside individual
   teaching documents; update them only when the user asks.

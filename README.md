@@ -1,20 +1,18 @@
 # PHY2039 2026–27
 
-This repository contains the working materials for **Scientific Computation
-with Python (PHY2039)** for the 2026–27 academic year.
+This repository contains the Chirun source for **Scientific Computation with
+Python (PHY2039)** for the 2026–27 academic year.
 
 ## Rollover workflow
 
-The complete tracked 2025–26 course is retained in [`archive/2526/`](archive/2526/)
-as a reference snapshot. The active top-level course begins as a complete copy
-of that material so Chirun can build the full website from the start.
-
-As each topic is prepared, update the copy in the active top-level folders and
-adjust its entry in `config.yml` when needed:
+The active course began as a complete copy of the 2025–26 course
+(<https://github.com/Jammy2211/PHY2039_2526>), so Chirun can build the full
+website from the start. As each topic is prepared, update it in the
+top-level folders and adjust its entry in `config.yml` when needed:
 
 - `content/` – current teaching pages and slides
 - `static/` – current images, downloads, styles and scripts
 - `notebooks/` – current source notebooks, when needed
 
-Leave `archive/2526/` unchanged so the previous version remains available for
-comparison throughout the rollover.
+To compare with last year, use the 2025–26 repository (checked out locally
+beside this one as `PHY2039/2526/site/`).
