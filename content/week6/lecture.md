@@ -181,6 +181,109 @@ Using `meshgrid` allows us to plot multivariable functions e.g.
 
 ---
 
+### Challenge: find the maximum (1D)
+
+Write Python code that finds the **index** and the **value** of the maximum of `y`.
+
+```python
+x = np.linspace(0, 10, 50)
+y = x*np.sin(x)
+plt.plot(x, y, 'o-')
+```
+
+Your code must still work when you change `x`, so don't read the answer off the plot.
+
+<div class="slideshow-container">
+  <div class="mySlides">
+    <img alt="x*sin(x) for x = np.linspace(0, 10, 50): the maximum is at index 39" src="../../static/images/week6/max1d_a.png" style="width:70%">
+  </div>
+  <div class="mySlides">
+    <img alt="x*sin(x) for x = np.linspace(0, 15, 80): the maximum is at index 75" src="../../static/images/week6/max1d_b.png" style="width:70%">
+  </div>
+</div>
+<br>
+
+<div class="range-slider-container">
+  <div class="go-left" onclick="plusDivs(-1)">&#10094;</div>
+  <input type="range" class="range-slider" id="slider" min="1" max="2" value="1" step="1">
+  <div class="go-right" onclick="plusDivs(1)">&#10095;</div>
+</div>
+
+<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+let slider = document.getElementById("slider");
+
+slider.addEventListener("input", function() {
+  showSlides(parseInt(slider.value));
+});
+
+function plusDivs(n) {
+    showSlides(slideIndex += n);
+    slider.value = parseInt(slider.value) + n
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let slidesnext = document.getElementsByClassName("go-right")[0];
+  let slidesprevious = document.getElementsByClassName("go-left")[0];
+
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex = n;
+  slides[slideIndex-1].style.display = "block";
+  slidesnext.style.display = "block";
+  slidesprevious.style.display = "block";
+  if (n == 1){slidesprevious.style.display = "none";}
+  if (n == 2){slidesnext.style.display = "none";}
+}
+</script>
+
+---
+
+### Challenge: find the maximum (2D)
+
+Now find the **indices** `i, j` and the **value** of the maximum of `Z`, and the point $(x, y)$ where it is. It must work when you change `x` or `y`. Hint: look up `np.unravel_index`.
+
+```python
+x = np.linspace(-8, 2, 101)
+y = np.linspace(0, 7, 81)
+X,Y = np.meshgrid(x,y)
+Z = Y*np.cos(X) + X*np.sin(Y)
+plt.contourf(X, Y, Z, 20)
+plt.colorbar()
+```
+
+![Contour plot of y*cos(x)+x*sin(y) with its maximum marked: Z[56, 15] = 11.17 at (x, y) = (-6.50, 4.90).](/static/images/week6/max2d_contour.png){width=45%}
+
+---
+
+### Challenge: solution
+
+```runnable lang="python"
+import numpy as np
+
+x = np.linspace(0, 10, 50)
+y = x*np.sin(x)
+i = np.argmax(y)
+print(i, x[i], y[i])
+
+x = np.linspace(-8, 2, 101)
+y = np.linspace(0, 7, 81)
+X,Y = np.meshgrid(x,y)
+Z = Y*np.cos(X) + X*np.sin(Y)
+i, j = np.unravel_index(np.argmax(Z), Z.shape)
+print(i, j, Z[i, j])
+print(X[i, j], Y[i, j])    # the same as x[j], y[i]
+```
+
+---
+
 ### 2. Figure size
 
 This week's handout also includes a great deal of customisation options for plots e.g. size:
