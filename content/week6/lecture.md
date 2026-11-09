@@ -124,6 +124,9 @@ y = np.arange(0,11)
 X,Y = np.meshgrid(x,y)
 ```
 
+* What are `x.shape` and `X.shape`?
+* What if you print `X[:,0]` and `Y[:,0]`?
+
 ---
 
 
@@ -147,7 +150,7 @@ Make a meshgrid where
 
 Then plot the grid points with `plt.plot(X, Y, 'o')`.
 
-Before you run it: what is `X.shape`? What are `X[0, -1]` and `Y[-1, 0]`?
+Before you run it: what are `X[0, -1]` and `Y[-1, 0]`?
 
 ---
 
