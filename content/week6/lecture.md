@@ -183,7 +183,7 @@ Using `meshgrid` allows us to plot multivariable functions e.g.
 
 ### Challenge: find the maximum (1D)
 
-Write Python code that finds the **index** and the **value** of the maximum of `y`.
+Write Python code that finds the **index** and the **value** of the maximum of `y`, then **plots it as a red dot** on the curve.
 
 ```python
 x = np.linspace(0, 10, 50)
@@ -272,6 +272,7 @@ x = np.linspace(0, 10, 50)
 y = x*np.sin(x)
 i = np.argmax(y)
 print(i, x[i], y[i])
+# plt.plot(x, y, 'o-'); plt.plot(x[i], y[i], 'ro', markersize=10)
 
 x = np.linspace(-8, 2, 101)
 y = np.linspace(0, 7, 81)
