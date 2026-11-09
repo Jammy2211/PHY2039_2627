@@ -14,9 +14,15 @@
 
 ## Mid-semester survey
 
-Most respondents seem to be enjoying the module so far.
+Most students are enjoying the module so far.
 
-Most common suggestion of something to improve: make the lecture more useful. I hope to be able to do this when we come back from the reading week: we'll be covering numerical integration and systems of differential equations, that benefit from more detailed exposition in lecture. 
+Main feedback: some of you would like the module to push you more, or to be more difficult.
+
+The second half of the course does get more challenging:
+
+* numerical differentiation,
+* numerical integration,
+* differential equations.
 
 ---
 
