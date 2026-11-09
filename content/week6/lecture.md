@@ -259,7 +259,7 @@ plt.contourf(X, Y, Z, 20)
 plt.colorbar()
 ```
 
-![Contour plot of y*cos(x)+x*sin(y) with its maximum marked: Z[56, 15] = 11.17 at (x, y) = (-6.50, 4.90).](/static/images/week6/max2d_contour.png){width=45%}
+![Contour plot of y*cos(x)+x*sin(y) with its maximum marked: Z[56, 15] = 11.17 at (x, y) = (-6.50, 4.90).](/static/images/week6/max2d_contour.png){width=85%}
 
 ---
 
