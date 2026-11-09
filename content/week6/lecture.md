@@ -146,12 +146,12 @@ plt.plot(X,Y,'o')
 
 Make a meshgrid where
 
-* `x` runs from $-2.0$ to $3.0$ with **50** equally spaced points,
-* `y` runs from $10.0$ to $20.0$ with **100** equally spaced points.
+* `x` runs from $-2.0$ to $3.0$ with **5** equally spaced points,
+* `y` runs from $10.0$ to $20.0$ with **10** equally spaced points.
 
-Then plot the grid points with `plt.plot(X, Y, 'b.')`. It should look like this:
+Then plot the grid points with `plt.plot(X, Y, 'bo')`. It should look like this:
 
-![50 x values from -2 to 3 and 100 y values from 10 to 20, plotted as a grid of points.](/static/images/week6/meshgrid_challenge.png){width=45%}
+![5 x values from -2 to 3 and 10 y values from 10 to 20, plotted as a grid of points.](/static/images/week6/meshgrid_challenge.png){width=45%}
 
 ---
 
@@ -160,8 +160,8 @@ Then plot the grid points with `plt.plot(X, Y, 'b.')`. It should look like this:
 ```runnable lang="python"
 import numpy as np
 
-x = np.linspace(-2.0, 3.0, 50)
-y = np.linspace(10.0, 20.0, 100)
+x = np.linspace(-2.0, 3.0, 5)
+y = np.linspace(10.0, 20.0, 10)
 X,Y = np.meshgrid(x,y)
 
 print(X.shape)               # rows from y, columns from x
@@ -169,7 +169,7 @@ print(X[0, 0], X[0, -1])
 print(Y[0, 0], Y[-1, 0])
 ```
 
-To plot it in Spyder: `plt.plot(X, Y, 'b.')`
+To plot it in Spyder: `plt.plot(X, Y, 'bo')`
 
 ---
 
