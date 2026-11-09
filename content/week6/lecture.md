@@ -35,6 +35,23 @@ Recommend consulting [the Assessment 2 sample question](https://ncl.instructure.
 
 ---
 
+## So far: plotting $y$ against $x$
+
+So far we have plotted with `plt.plot` and `plt.scatter`:
+
+```python
+x = np.linspace(0, 2*np.pi, 30)
+y = np.sin(x)
+plt.plot(x, y)
+plt.scatter(x, y)
+```
+
+![The same sine data drawn with plt.plot as a line and with plt.scatter as points.](/static/images/week6/plot_vs_scatter.png){width=68%}
+
+Both take 1D arrays of $x$ and $y$ values: each point is a pair $(x, y)$. Nothing yet in three dimensions.
+
+---
+
 ## Advanced plotting
 
 This week's handout covers:
@@ -82,19 +99,18 @@ Many of the above plots require a `meshgrid`. Suppose we wish to plot $f(x,y) = 
 
 We might try
 
-```python
+```runnable lang="python"
+import numpy as np
+
 x = np.arange(0,11)
 y = np.arange(0,11)
 z = np.sqrt(x**2+y**2)
+
+print(z)
+print(z.shape)
 ```
 
----
-
-But this only computes the points `np.sqrt(x[i]**2+y[i]**2)`
-
-![A grid of x and y values set up without meshgrid.](/static/images/week2/lecture_nomeshgrid.png){width="80%"}
-
-We can use `meshgrid` to compute the points `np.sqrt(x[i]**2+y[j]**2)` for $i \neq j$.
+`z` is 1D: it only holds the 11 points `np.sqrt(x[i]**2+y[i]**2)`. We need `meshgrid` to get every combination `np.sqrt(x[i]**2+y[j]**2)`.
 
 ---
 
