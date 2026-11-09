@@ -100,78 +100,12 @@ We can use `meshgrid` to compute the points `np.sqrt(x[i]**2+y[j]**2)` for $i \n
 
 ## Inside a meshgrid
 
-Run this here or in Spyder. What does each **row** of `X` look like? Each **column**? Predict `Y` before you print it.
-
 ```runnable lang="python"
 import numpy as np
 
 x = np.arange(0,11)
 y = np.arange(0,11)
 X,Y = np.meshgrid(x,y)
-
-print(X)
-print(Y)
-```
-
----
-
-### Rows and columns
-
-Predict each line, then run. Which of `Y[0]` and `Y[:, 0]` holds the values $0, 1, \ldots, 10$?
-
-```runnable lang="python"
-import numpy as np
-
-x = np.arange(0,11)
-y = np.arange(0,11)
-X,Y = np.meshgrid(x,y)
-
-print(X.shape)
-print(X[0])       # row 0
-print(X[:, 0])    # column 0
-print(Y[0])
-print(Y[:, 0])
-```
-
----
-
-### Which point is stored where?
-
-Position `[3, 7]` stores one grid point. Is it $(x, y) = (3, 7)$ or $(7, 3)$?
-
-```runnable lang="python"
-import numpy as np
-
-x = np.arange(0,11)
-y = np.arange(0,11)
-X,Y = np.meshgrid(x,y)
-
-print(X[3, 7], Y[3, 7])
-
-i, j = 4, 9
-print(X[i, j] == x[j], Y[i, j] == y[i])
-```
-
-Fill in the rule: `X[i, j] = x[?]` and `Y[i, j] = y[?]`.
-
----
-
-### Slices of a meshgrid
-
-Which block of points does each slice pick? Predict, then run.
-
-```runnable lang="python"
-import numpy as np
-
-x = np.arange(0,11)
-y = np.arange(0,11)
-X,Y = np.meshgrid(x,y)
-
-print(Y[2:5, 6:9])
-print(X[::5, ::5])
-
-Z = np.sqrt(X**2 + Y**2)
-print(Z[3, 4])
 ```
 
 ---
