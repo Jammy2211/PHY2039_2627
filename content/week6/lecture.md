@@ -126,6 +126,7 @@ X,Y = np.meshgrid(x,y)
 
 * What are `x.shape` and `X.shape`?
 * What if you print `X[:,0]` and `Y[:,0]`?
+* What if you print other slices? Can you extract a 2D array of points within the meshgrid?
 
 ---
 
@@ -148,15 +149,9 @@ Make a meshgrid where
 * `x` runs from $-2.0$ to $3.0$ with **50** equally spaced points,
 * `y` runs from $10.0$ to $20.0$ with **100** equally spaced points.
 
-Then plot the grid points with `plt.plot(X, Y, 'o')`.
+Then plot the grid points with `plt.plot(X, Y, 'b.')`. It should look like this:
 
-Before you run it: what are `X[0, -1]` and `Y[-1, 0]`?
-
----
-
-### Challenge: what it should look like
-
-![50 x values from -2 to 3 and 100 y values from 10 to 20, plotted as a grid of points.](/static/images/week6/meshgrid_challenge.png){width=70%}
+![50 x values from -2 to 3 and 100 y values from 10 to 20, plotted as a grid of points.](/static/images/week6/meshgrid_challenge.png){width=45%}
 
 ---
 
@@ -174,7 +169,7 @@ print(X[0, 0], X[0, -1])
 print(Y[0, 0], Y[-1, 0])
 ```
 
-To plot it in Spyder: `plt.plot(X, Y, 'o', markersize=2)`
+To plot it in Spyder: `plt.plot(X, Y, 'b.')`
 
 ---
 
