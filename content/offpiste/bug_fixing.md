@@ -3,11 +3,12 @@
 This workshop is for later in the course, after you have used NumPy arrays,
 indexing, array shapes, matrix multiplication and `for` loops. Bug 3
 also assumes familiarity with the forward Euler method for solving ordinary
-differential equations, and Bug 4 uses the trapezoid rule from Week 7. For an
-introduction using simple variables and arithmetic, start with
-**Bug Fixing (Beginner)** in the course contents.
+differential equations, and Bugs 4 and 5 use the trapezoid rule and the
+central difference method from Week 7. For an introduction using simple
+variables and arithmetic, start with **Bug Fixing (Beginner)** in the course
+contents.
 
-The lecture demonstration and the four exercises below contain deliberate bugs.
+The lecture demonstration and the five exercises below contain deliberate bugs.
 Each runnable block is a separate program: an assertion failure or an
 `IndexError` on the first run is expected.
 
@@ -315,4 +316,90 @@ from scipy.integrate import trapezoid
 
 t = np.linspace(a, b, 5)
 print(trapezoid(velocity(t), t), trapezoid_rule(velocity, a, b, 5))
+```
+
+## Bug 5: velocity from position with the central difference
+
+This exercise is also longer than the first three. It contains a single bug.
+
+A mass on a spring oscillates with position `x(t) = sin(t)` in m. Its velocity
+is the derivative of the position, which we can calculate exactly:
+
+$$ v(t) = \frac{\mathrm{d}x}{\mathrm{d}t} = \cos t, \qquad v(1) = \cos 1 = 0.540302\ldots \text{ m/s} $$
+
+The central difference method estimates the slope at `t` from the straight
+line through the two points either side of it, a distance `h` away:
+
+$$ \frac{\mathrm{d}x}{\mathrm{d}t} \approx \frac{x(t+h)-x(t-h)}{2h} = \frac{\text{rise}}{\text{run}} $$
+
+The program below estimates the velocity at `t = 1` s with its own central
+difference, using smaller and smaller steps `h`, and prints each estimate and
+its error. The method is an approximation, so we do not expect the exact
+answer. But the answers are wrong by more than the method alone explains, and
+the final check fails:
+
+```text
+AssertionError: The estimate with the smallest h is not accurate enough.
+```
+
+**Task:** Run the whole block and read the output carefully before changing
+anything. Find the bug and fix the calculation. Do not change the exact answer,
+the position function or the final check.
+
+```runnable lang="python"
+import numpy as np
+
+
+# ---------------------------------------------------------------------------
+# The position of the mass, in m
+# ---------------------------------------------------------------------------
+def position(t):
+    return np.sin(t)
+
+
+# ---------------------------------------------------------------------------
+# Our own central difference method
+# ---------------------------------------------------------------------------
+def central_difference(f, t, h):
+    """Estimate the derivative of f at time t, using the two points
+    t - h and t + h either side of it."""
+    rise = f(t + h) - f(t - h)
+    derivative = rise / 2*h
+
+    return derivative
+
+
+# ---------------------------------------------------------------------------
+# Compare with the exact answer, using smaller and smaller steps
+# ---------------------------------------------------------------------------
+t = 1.0
+exact = np.cos(t)
+print(f"exact velocity at t = {t} s:  {exact:.8f} m/s")
+
+for h in [0.1, 0.05, 0.025, 0.0125, 0.00625]:
+    velocity = central_difference(position, t, h)
+    error = abs(velocity - exact)
+    print(f"h = {h:<8}  velocity = {velocity:.8f} m/s,  error = {error:.2e} m/s")
+
+# With h = 0.00625, a correct central difference is accurate to better than 1e-5 m/s.
+assert error < 1e-5, "The estimate with the smallest h is not accurate enough."
+print("Success! The central difference agrees with the exact answer.")
+```
+
+**Hints** (try without them first):
+
+1. *Is it a bug, or just the approximation?* The central difference error is
+   $\mathcal{O}(h^2)$: each time `h` halves, the error should become about
+   4 times smaller. What does the error do here as `h` gets smaller?
+2. Inside `central_difference`, print `rise`, `h` and `derivative` for one
+   value of `h`. Work out by hand what $\text{rise} / 2h$ should be. Does it
+   match?
+3. For three evenly spaced points, the middle value from `np.gradient` is the
+   central difference, so it should agree with your function to many decimal
+   places:
+
+```python
+h = 0.1
+times = np.array([t - h, t, t + h])
+print(np.gradient(position(times), times)[1], central_difference(position, t, h))
 ```
