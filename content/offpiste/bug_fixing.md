@@ -289,12 +289,15 @@ def trapezoid_rule(f, a, b, n_points):
 # Compare with the exact answer, using more and more points
 a = 0
 b = np.pi
-exact = 2.0
+exact = 2.0   # exact answer from maths: [-cos(t)] from 0 to pi = 2
+print(f"Exact answer from maths: distance = {exact:.6f} m")
+print()
+print("points   numerical   exact (maths)   error = |numerical - exact|")
 
 for n_points in [5, 9, 17, 33, 65]:
     distance = trapezoid_rule(velocity, a, b, n_points)
     error = abs(distance - exact)
-    print(f"{n_points:3d} points:  distance = {distance:.6f} m,  error = {error:.2e} m")
+    print(f"{n_points:4d}     {distance:.6f}    {exact:.6f}        {error:.2e} m")
 
 # With 65 points, a correct trapezoid rule is accurate to better than 1 mm.
 assert error < 1e-3, "The estimate with 65 points is not accurate enough."
@@ -373,13 +376,15 @@ def central_difference(f, t, h):
 # Compare with the exact answer, using smaller and smaller steps
 # ---------------------------------------------------------------------------
 t = 1.0
-exact = np.cos(t)
-print(f"exact velocity at t = {t} s:  {exact:.8f} m/s")
+exact = np.cos(t)   # the exact answer from maths: d/dt sin(t) = cos(t)
+print(f"Exact answer from maths: v(1) = cos(1) = {exact:.8f} m/s")
+print()
+print("h          numerical     exact (maths)   error = |numerical - exact|")
 
 for h in [0.1, 0.05, 0.025, 0.0125, 0.00625]:
     velocity = central_difference(position, t, h)
     error = abs(velocity - exact)
-    print(f"h = {h:<8}  velocity = {velocity:.8f} m/s,  error = {error:.2e} m/s")
+    print(f"{h:<9}  {velocity:.8f}    {exact:.8f}      {error:.2e} m/s")
 
 # With h = 0.00625, a correct central difference is accurate to better than 1e-5 m/s.
 assert error < 1e-5, "The estimate with the smallest h is not accurate enough."
