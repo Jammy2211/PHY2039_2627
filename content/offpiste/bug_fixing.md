@@ -1,12 +1,13 @@
 # Bug Fixing (Advanced)
 
 This workshop is for later in the course, after you have used NumPy arrays,
-indexing, array shapes, matrix multiplication and `for` loops. The final
-exercise also assumes familiarity with the forward Euler method for solving
-ordinary differential equations. For an introduction using simple variables
-and arithmetic, start with **Bug Fixing (Beginner)** in the course contents.
+indexing, array shapes, matrix multiplication and `for` loops. Bug 3
+also assumes familiarity with the forward Euler method for solving ordinary
+differential equations, and Bug 4 uses the trapezoid rule from Week 7. For an
+introduction using simple variables and arithmetic, start with
+**Bug Fixing (Beginner)** in the course contents.
 
-The lecture demonstration and the three exercises below contain deliberate bugs.
+The lecture demonstration and the four exercises below contain deliberate bugs.
 Each runnable block is a separate program: an assertion failure or an
 `IndexError` on the first run is expected.
 
@@ -230,4 +231,88 @@ assert np.isclose(y[-1], 0.25141332912489534, rtol=0, atol=1e-8), "The final val
 
 print("Success! All Euler checks passed.")
 print("Euler approximation at t = 1:", y[-1])
+```
+
+## Bug 4: distance travelled with the trapezoid rule
+
+This exercise is longer than the others. It contains a single bug.
+
+A particle moves along a line with velocity `v(t) = sin(t)` in m/s. The
+distance it travels between `t = 0` and `t = pi` seconds is the area under
+`v(t)`, which we can calculate exactly:
+
+$$ \int_0^{\pi} \sin t \,\mathrm{d}t = \Big[-\cos t\Big]_0^{\pi} = -\cos\pi + \cos 0 = 2 \text{ m} $$
+
+The program below estimates this integral with its own trapezoid rule, using
+5, 9, 17, 33 and 65 equally spaced points, and prints each estimate and its
+error. The trapezoid rule is an approximation, so we do not expect exactly
+`2` m. But the answers are wrong by more than the trapezoid rule alone
+explains, and with 65 points the final check fails:
+
+```text
+AssertionError: The estimate with 65 points is not accurate enough.
+```
+
+There is no error message pointing at a line this time. The program runs and
+produces believable numbers, so you must decide whether the error is just the
+approximation or a bug.
+
+**Task:** Run the whole block and read the output carefully before changing
+anything. Find the bug and fix the calculation. Do not change the exact answer,
+the velocity function or the final check.
+
+```runnable lang="python"
+import numpy as np
+
+
+# The velocity of the particle, in m/s
+def velocity(t):
+    return np.sin(t)
+
+
+# Our own trapezoid rule
+def trapezoid_rule(f, a, b, n_points):
+    """Estimate the integral of f from a to b using n_points equally
+    spaced points (including both ends)."""
+    t = np.linspace(a, b, n_points)
+    h = (b - a) / n_points
+
+    area = 0.0
+    for i in range(n_points - 1):
+        # area of one trapezoid: width x average height
+        area += h * (f(t[i]) + f(t[i + 1])) / 2
+
+    return area
+
+
+# Compare with the exact answer, using more and more points
+a = 0
+b = np.pi
+exact = 2.0
+
+for n_points in [5, 9, 17, 33, 65]:
+    distance = trapezoid_rule(velocity, a, b, n_points)
+    error = abs(distance - exact)
+    print(f"{n_points:3d} points:  distance = {distance:.6f} m,  error = {error:.2e} m")
+
+# With 65 points, a correct trapezoid rule is accurate to better than 1 mm.
+assert error < 1e-3, "The estimate with 65 points is not accurate enough."
+print("Success! The trapezoid rule agrees with the exact answer.")
+```
+
+**Hints** (try without them first):
+
+1. *Is it a bug, or just the approximation?* Each time the number of points
+   doubles, the step `h` halves. The trapezoid rule's error is
+   $\mathcal{O}(h^2)$, so the error should become about 4 times smaller each
+   time. Divide each error by the next one. What do you get?
+2. Inside `trapezoid_rule`, print `t`, `h` and `t[1] - t[0]`. Should they agree?
+3. Compare your function with SciPy on the same points. Both use the same
+   method, so they should agree to many decimal places:
+
+```python
+from scipy.integrate import trapezoid
+
+t = np.linspace(a, b, 5)
+print(trapezoid(velocity(t), t), trapezoid_rule(velocity, a, b, 5))
 ```
